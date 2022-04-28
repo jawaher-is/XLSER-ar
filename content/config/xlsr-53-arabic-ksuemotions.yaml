@@ -1,0 +1,8 @@
+seed: 101
+corpora: ksuemotions
+model_name_or_path: lighteternal/wav2vec2-large-xlsr-53-arabic
+output_dir: ./content/models/wav2vec2-xlsr-arabic-ksuemotions
+data_path: ./content/data/ksu_emotions/data/SPEECH/
+test: None
+train: None
+evaluate: None
