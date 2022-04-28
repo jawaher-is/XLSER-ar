@@ -1,6 +1,7 @@
 """
 This file contains functions to process each dataset used accordingly.
 """
+
 import numpy as np
 import pandas as pd
 
@@ -15,7 +16,7 @@ import os
 import argparse
 import yaml
 
-class CorpusDataFrame():
+class PrepareDataPaths():
     def __init__(self):
         self.data = []
         self.exceptions = 0
@@ -39,11 +40,46 @@ class CorpusDataFrame():
         df = pd.DataFrame(self.data)
         return df
 
+# class KSUTest(PrepareDataPaths):
+# data_path = './content/data/ksu_emotions/data/SPEECH/'
+def KSUTest(data_path):
+    print('TESTING CLASS')
+
+    Class = PrepareDataPaths()
+
+    # def __init__(self, data_path):
+    #     super().__init__(data_path)
+
+    for path in tqdm(Path(data_path).glob("**/**/*.flac")): # self.data_path
+        name = str(path).split('/')[-1].split('.')[0]
+        label = int(name.split('E')[-1].split('P')[0])
+
+        if label == 0:
+            label = 'neutral'# 'Neutral'
+        elif label == 1:
+            label = 'happy' # 'Happiness'
+        elif label == 2:
+            label = 'sad' # Sadness'
+        elif label == 3:
+            label = 'surprise' #'Surprise'
+        elif label == 4:
+            label = 'questioning' # 'Questioning'
+        elif label == 5:
+            label = 'angry' # 'Anger'
+
+        Class.append_file(path, name, label)
+
+    df = Class.data_frame()
+
+    return df
+
+df = KSUTest('./content/data/ksu_emotions/data/SPEECH/')
 
 def KSUEmotions(data_path):
     print('PREPARING KSUEmotions DATA PATHS')
 
-    cdf = CorpusDataFrame()
+    data = []
+    exceptions = 0
 
     for path in tqdm(Path(data_path).glob("**/**/*.flac")):
         name = str(path).split('/')[-1].split('.')[0]
@@ -62,9 +98,22 @@ def KSUEmotions(data_path):
         elif label == 5:
             label = 'angry' # 'Anger'
 
-        cdf.append_file(path, name, label)
+        try:
+            # avoid broken files
+            s = torchaudio.load(path)
+            data.append({
+                "name": name,
+                "path": path,
+                "emotion": label
+            })
+        except Exception as e:
+            print('Could not load ', str(path), e)
+            exceptions+=1
+            pass
 
-    df = cdf.data_frame()
+    if exceptions > 0: print(f'{exceptions} files could not be loaded')
+
+    df = pd.DataFrame(data)
 
     return df
 
@@ -72,24 +121,39 @@ def KSUEmotions(data_path):
 def RAVDESS(data_path):
     print('PREPARING RAVDESS DATA PATHS')
 
-    cdf = CorpusDataFrame()
+    data = []
+    exceptions = 0
 
     for path in tqdm(Path(data_path).glob("**/*.wav")):
         name = str(path).split('/')[-1].split('.')[0]
         label = name.split('-')[2]
 
-        cdf.append_file(path, name, label)
+        try:
+            # avoid broken files
+            s = torchaudio.load(path)
+            data.append({
+                "name": name,
+                "path": path,
+                "emotion": label
+            })
+        except Exception as e:
+            print('Could not load ', str(path), e)
+            exceptions+=1
+            pass
 
-    df = cdf.data_frame()
+    if exceptions > 0: print(f'{exceptions} files could not be loaded')
+
+    df = pd.DataFrame(data)
     df.emotion.replace({'01':'neutral', '02':'calm', '03':'happy', '04':'sad', '05':'angry', '06':'fear', '07':'disgust', '08':'surprise'}, inplace=True)
-
+    # ravdess_df.head() # do not display on hpc
     return df
 
 
 def CREMA(data_path):
     print('PREPARING CREMA DATA PATHS')
 
-    cdf = CorpusDataFrame()
+    data = []
+    exceptions = 0
 
     for path in tqdm(Path(data_path).glob("*.wav")):
         name = str(path).split('/')[-1].split('.')[0]
@@ -111,33 +175,60 @@ def CREMA(data_path):
             label = 'unknown'
             print('Unknown label detected in ', path)
 
-        cdf.append_file(path, name, label)
+        try:
+            # avoid broken files
+            s = torchaudio.load(path)
+            crema_data.append({
+                "name": name,
+                "path": path,
+                "emotion": label
+            })
+        except Exception as e:
+            print('Could not load ', str(path), e)
+            exceptions+=1
+            pass
 
-    df = cdf.data_frame()
+    if exceptions > 0: print(f'{exceptions} files could not be loaded')
 
+    df = pd.DataFrame(data)
     return df
 
 
 def TESS(data_path):
     print('PREPARING TESS DATA PATHS')
 
-    cdf = CorpusDataFrame()
+    data = []
+    exceptions = 0
 
     for path in tqdm(Path(data_path).glob("**/*.wav")):
         name = str(path).split('/')[-1].split('.')[0]
         label = name.split('_')[-1]
         if label =='ps': label = 'surprise'
 
-        cdf.append_file(path, name, label)
+        try:
+            # avoid broken files
+            s = torchaudio.load(path)
+            data.append({
+                "name": name,
+                "path": path,
+                "emotion": label
+            })
+        except Exception as e:
+            print('Could not load ', str(path), e)
+            exceptions+=1
+            pass
 
-    df = cdf.data_frame()
+    if exceptions > 0: print(f'{exceptions} files could not be loaded')
+
+    df = pd.DataFrame(data)
     return df
 
 
 def SAVEE(data_path):
     print('PREPARING SAVEE DATA PATHS')
 
-    cdf = CorpusDataFrame()
+    data = []
+    exceptions = 0
 
     for path in tqdm(Path(data_path).glob("*.wav")):
         name = str(path).split('/')[-1].split('.')[0]
@@ -161,9 +252,22 @@ def SAVEE(data_path):
             label = 'unknown'
             print('Unknown label detected in ', path)
 
-        cdf.append_file(path, name, label)
+        try:
+            # avoid broken files
+            s = torchaudio.load(path)
+            data.append({
+                "name": name,
+                "path": path,
+                "emotion": label
+            })
+        except Exception as e:
+            print('Could not load ', str(path), e)
+            exceptions+=1
+            pass
 
-    df = cdf.data_frame()
+    if exceptions > 0: print(f'{exceptions} files could not be loaded')
+
+    df = pd.DataFrame(data)
     return df
 
 
@@ -236,6 +340,7 @@ def prepare_splits(df, config):
 
 
 if __name__ == '__main__':
+    # config
     parser = agrparse.ArgumentParser()
     parser.add_argument('--config', help='yaml configuration file path')
     args = parser.parse_arguments()
