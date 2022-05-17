@@ -22,5 +22,11 @@ After preparing the data splits, update the splits' data paths in the configurat
 python3 preprocess_data.py --config content/config/<config-file>.yaml
 ```
 #### 3. Train
+```
+```
 #### 4. Evaluate
+```
+```
 ...
+
+For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)

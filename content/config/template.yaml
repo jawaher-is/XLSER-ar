@@ -1,5 +1,5 @@
 seed: # seed to recreate results
-corpora: # dataset name
+corpora: # dataset name or a list from the following datasets [ksuemotions, ravess, crema, tess, savee]
 data_path: # dataset path
 
 model_name_or_path: # underlying pretrained model name or path

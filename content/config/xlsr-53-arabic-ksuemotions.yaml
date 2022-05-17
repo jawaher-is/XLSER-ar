@@ -4,7 +4,7 @@ data_path: ./content/data/ksu_emotions/data/SPEECH/
 
 model_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
-attention_mask: null  # None for xlsr-arabic
+attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
 
 output_dir: ./content/models/wav2vec2-xlsr-arabic-ksuemotions
 test: null
