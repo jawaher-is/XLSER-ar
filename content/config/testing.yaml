@@ -1,0 +1,12 @@
+seed: 101
+corpora: ksuemotions
+data_path: /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions
+
+model_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
+pooling_mode: mean
+attention_mask: null  # None for xlsr-arabic
+
+output_dir: ./content/models/test220517
+test: ./content/models/test220517/splits/test.csv
+train: ./content/models/test220517/splits/train.csv
+evaluate: ./content/models/test220517/splits/valid.csv
