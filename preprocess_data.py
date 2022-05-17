@@ -5,10 +5,11 @@ import yaml
 def training_data(configurations):
     """
     Prepare Data for Training
+    return: train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
     """
 
     # Loading the created dataset using datasets
-    from datasets import load_dataset, load_metric, Dataset
+    from datasets import load_dataset
 
     data_files = {
         "train": train_filepath,
@@ -22,11 +23,11 @@ def training_data(configurations):
     print('train_dataset: ', train_dataset)
     print('eval_dataset: ', eval_dataset)
 
-    # Specify the input and output column
+    # Specify the input and output columns
     input_column = "path"
     output_column = "emotion"
 
-    # Distinguish the unique labels in our SER dataset
+    # Distinguish the unique labels in the dataset
     label_list = train_dataset.unique(output_column)
     label_list.sort()  # Sort it for determinism
     num_labels = len(label_list)
@@ -36,11 +37,17 @@ def training_data(configurations):
 
 
 def load_processor(configurations, label_list):
+    """
+    Load the processor of the underlying pretrained wav2vec model
+    return: config, processor, target_sampling_rate
+    """
+
     from transformers import AutoConfig, Wav2Vec2Processor
 
     model_name_or_path = configurations['model_name_or_path']
     pooling_mode = configurations['pooling_mode']
 
+    # Load model configuration
     config = AutoConfig.from_pretrained(
         model_name_or_path,
         num_labels=num_labels,
@@ -58,6 +65,10 @@ def load_processor(configurations, label_list):
 
 
 def preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list):
+    """
+    Preprocess the datasets, extract features, and save them to file.
+    return: train_dataset, eval_dataset splits with the features
+    """
     import torchaudio
     import numpy as np
     from tqdm import tqdm
@@ -91,6 +102,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
     features_path = configurations['output_dir'] + '/features'
 
     if os.path.exists(features_path + "/train_dataset") and os.path.exists(features_path + "/eval_dataset"):
+        # Load preprocessed datasets from file
         from datasets import load_from_disk
         train_dataset = load_from_disk(features_path + "/train_dataset")
         eval_dataset = load_from_disk((features_path + "/eval_dataset"))
@@ -142,6 +154,7 @@ if __name__ == '__main__':
         configurations = yaml.load(f, Loader=yaml.FullLoader)
 
 
+    # prepare_data
     train_filepath = configurations['output_dir'] + "/splits/train.csv"
     test_filepath = configurations['output_dir'] + "/splits/test.csv"
     valid_filepath = configurations['output_dir'] + "/splits/valid.csv"
@@ -152,12 +165,11 @@ if __name__ == '__main__':
         df = df(configurations)
         prepare_splits(df, configurations)
 
+
+    # Preprocess data
+
     train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = training_data(configurations)
 
     config, processor, target_sampling_rate = load_processor(configurations, label_list)
 
     train_dataset, eval_dataset = preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)
-
-
-
-    #
