@@ -4,11 +4,11 @@ import yaml
 
 def training_data(configurations):
     """
-    Prepare Data for Training
+    Prepare Data splits for Training
     return: train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
     """
 
-    # Loading the created dataset using datasets
+    # Load the created dataset splits using datasets
     from datasets import load_dataset
 
     data_files = {
@@ -41,7 +41,6 @@ def load_processor(configurations, label_list):
     Load the processor of the underlying pretrained wav2vec model
     return: config, processor, target_sampling_rate
     """
-
     from transformers import AutoConfig, Wav2Vec2Processor
 
     model_name_or_path = configurations['model_name_or_path']
@@ -57,6 +56,7 @@ def load_processor(configurations, label_list):
         )
     setattr(config, 'pooling_mode', pooling_mode)
 
+    # Load processor
     processor = Wav2Vec2Processor.from_pretrained(model_name_or_path,)
     target_sampling_rate = processor.feature_extractor.sampling_rate
     print(f"The target sampling rate: {target_sampling_rate}")
@@ -78,7 +78,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
     def speech_file_to_array_fn(path):
         speech_array, sampling_rate = torchaudio.load(path)
         resampler = torchaudio.transforms.Resample(sampling_rate, target_sampling_rate)
-        speech = resampler(speech_array).squeeze().numpy() #  <class 'numpy.ndarray'>
+        speech = resampler(speech_array).squeeze().numpy()
         return speech
 
     def label_to_id(label, label_list):
@@ -90,8 +90,8 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
         speech_list = [speech_file_to_array_fn(path) for path in examples[input_column]]
         target_list = [label_to_id(label, label_list) for label in examples[output_column]]
 
-        result = processor(speech_list, sampling_rate=target_sampling_rate) # <class 'transformers.feature_extraction_utils.BatchFeature'> , padding=True??
-        result["labels"] = list(target_list) # list of indicies of of target label
+        result = processor(speech_list, sampling_rate=target_sampling_rate)
+        result["labels"] = list(target_list)
 
         # print('\nASSERTING dtype')
         # for i in tqdm(range(len(result['input_values']))):
@@ -102,6 +102,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
     features_path = configurations['output_dir'] + '/features'
 
     if os.path.exists(features_path + "/train_dataset") and os.path.exists(features_path + "/eval_dataset"):
+
         # Load preprocessed datasets from file
         from datasets import load_from_disk
         train_dataset = load_from_disk(features_path + "/train_dataset")
@@ -116,6 +117,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
             batched=True,
             num_proc=4
         )
+
         # Save preprocessed dataset to file
         train_dataset.save_to_disk(features_path + "/train_dataset")
 
@@ -125,11 +127,12 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
             batched=True,
             num_proc=4
         )
+
         eval_dataset.save_to_disk(features_path + "/eval_dataset")
+
         print(f"\n train and eval features saved to {features_path}")
 
     print('train_dataset: ', train_dataset)
-
     idx = 0
     print(f"Training input_values: {train_dataset[idx]['input_values']}")
     print(configurations['attention_mask'])
@@ -138,7 +141,6 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
     print(f"Training labels: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
 
     return train_dataset, eval_dataset
-
 
 
 
