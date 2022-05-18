@@ -63,7 +63,7 @@ train_dataset, eval_dataset = preprocess_data.preprocess_data(configurations, pr
 data_collator = build_model.data_collator(processor)
 
 # Define evaluation metrics
-compute_metrics = build_model.compute_metrics()
+compute_metrics = build_model.compute_metrics
 
 # Load the pretrained XLSR-Wav2Vec2 checkpoint into our classification model with a pooling strategy.
 model = build_model.load_pretrained_checkpoint(config, configurations['model_name_or_path'])

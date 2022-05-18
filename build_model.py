@@ -22,7 +22,7 @@ from transformers import EvalPrediction
 
 """ Build the classification model based on the merge strategy"""
 
-@dataclasses
+@dataclass
 class SpeechClassifierOutput(ModelOutput):
     loss: Optional[torch.FloatTensor] = None
     logits: torch.FloatTensor = None
