@@ -8,7 +8,7 @@ from transformers import AutoConfig, Wav2Vec2Processor
 
 def training_data(configurations):
     """
-    Prepare Data splits for Training
+    Prepare data splits for Training
     return: train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
     """
 

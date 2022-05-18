@@ -35,6 +35,7 @@ For the structure of the config file, see [template.yaml](https://github.com/jaw
 ## File Structure
 ```
 XLSER
+├── build_model.py
 ├── content
 │   ├── config
 │   │   ├── testing.yaml
@@ -54,6 +55,7 @@ XLSER
 ├── nested_array_catcher.py
 ├── prepare_data.py
 ├── preprocess_data.py
-└── README.md
+├── README.md
+└── train.py
 
 ```

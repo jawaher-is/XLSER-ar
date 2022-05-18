@@ -134,6 +134,8 @@ class Wav2Vec2ForSpeechClassification(Wav2Vec2PreTrainedModel):
         )
 
 
+""" Define a data collator """
+
 @dataclass
 class DataCollatorCTCWithPadding:
     """
@@ -186,12 +188,7 @@ class DataCollatorCTCWithPadding:
         return batch
 
 
-def set_up_Trainer(config, processor, model_name_or_path):
-    """
-    Use Huggingface's Trainer to set up the training pipline. For that we need to:
-        - Define a data collator.
-        - Evaluation metric.
-    """
+def data_collator(processor, model_name_or_path):
 
     data_collator = DataCollatorCTCWithPadding(processor=processor, padding=True)
 
@@ -204,8 +201,7 @@ Define the evaluation metric
     # There are many pre-defined metrics for classification/regression problems, but in this case, we would continue with just **Accuracy** for classification and **MSE** for regression. You can define other metrics on your own.
 """
 
-def compute_metrics(p: EvalPrediction):
-    is_regression = False
+def compute_metrics(p: EvalPrediction, is_regression=False):
 
     preds = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
     preds = np.squeeze(preds) if is_regression else np.argmax(preds, axis=1)
@@ -216,22 +212,13 @@ def compute_metrics(p: EvalPrediction):
         return {"accuracy": (preds == p.label_ids).astype(np.float32).mean().item()}
 
 
-
-
-"""
-Now, we can load the pretrained XLSR-Wav2Vec2 checkpoint into our classification model with a pooling strategy.
-We need to load a pretrained checkpoint and configure it correctly for training.
-"""
-def load_pretrained_checkpoint():
+def load_pretrained_checkpoint(config, model_name_or_path):
 
     model = Wav2Vec2ForSpeechClassification.from_pretrained(
         model_name_or_path,
         config=config,
     )
     return  model
-
-
-
 
 
 #
