@@ -32,7 +32,7 @@ python3 preprocess_data.py --config content/config/<config-file>.yaml
 For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
 
 
-## File/folder Structure
+## File Structure
 ```
 XLSER
 ├── content
