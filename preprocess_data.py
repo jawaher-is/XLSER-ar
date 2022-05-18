@@ -1,6 +1,10 @@
+"""
+Preprocess training and validation dataset splits and save the features in ./content/<modelname>/features/
+"""
+
 import os
-import argparse
-import yaml
+
+from transformers import AutoConfig, Wav2Vec2Processor
 
 def training_data(configurations):
     """
@@ -41,7 +45,6 @@ def load_processor(configurations, label_list):
     Load the processor of the underlying pretrained wav2vec model
     return: config, processor, target_sampling_rate
     """
-    from transformers import AutoConfig, Wav2Vec2Processor
 
     model_name_or_path = configurations['model_name_or_path']
     pooling_mode = configurations['pooling_mode']
@@ -66,7 +69,8 @@ def load_processor(configurations, label_list):
 
 def preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list):
     """
-    Preprocess the datasets, extract features, and save them to file.
+    Preprocess the datasets:
+    Resample the audio files, extract features using the processor, and save them to file.
     return: train_dataset, eval_dataset splits with the features
     """
     import torchaudio
@@ -87,7 +91,9 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
         return label
 
     def preprocess_function(examples):
+        # Read all the audio files and resample them to 16kHz
         speech_list = [speech_file_to_array_fn(path) for path in examples[input_column]]
+        # Map each audio file to the corresponding label
         target_list = [label_to_id(label, label_list) for label in examples[output_column]]
 
         result = processor(speech_list, sampling_rate=target_sampling_rate)
@@ -110,7 +116,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
         print("Loaded preprocessed dataset from file")
 
     else:
-        # Preprocess features
+        # Preprocess features using a multiprocess map function
         train_dataset = train_dataset.map(
             preprocess_function,
             batch_size=100,
@@ -145,6 +151,8 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
 
 
 if __name__ == '__main__':
+    import argparse
+    import yaml
 
     # Get the configuration file
     parser = argparse.ArgumentParser()

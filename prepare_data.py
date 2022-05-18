@@ -1,5 +1,6 @@
 """
 This file contains functions to process each dataset used accordingly.
+Saves train, test, valid data splits in ./content/<modelname>/splits/
 """
 import numpy as np
 import pandas as pd
@@ -12,8 +13,7 @@ from sklearn.model_selection import train_test_split
 
 import os
 # import sys
-import argparse
-import yaml
+
 
 class CorpusDataFrame():
     """
@@ -234,6 +234,10 @@ def prepare_splits(df, config):
     output_dir = config['output_dir']
     save_path = output_dir + "/splits/"
 
+    # Create splits directory
+    if not os.path.isdir(save_path):
+        os.makedirs(save_path)
+
     # Create train, test, and validation splits.
     random_state = config['seed'] # 101
     train_df, test_df = train_test_split(df, test_size=0.1, train_size=0.9, random_state=random_state, stratify=df["emotion"])
@@ -254,6 +258,8 @@ def prepare_splits(df, config):
 
 
 if __name__ == '__main__':
+    import argparse
+    import yaml
 
     # Get the configuration file containing dataset name, path, and other configurations
     parser = argparse.ArgumentParser()
@@ -268,10 +274,8 @@ if __name__ == '__main__':
     test_filepath = config['output_dir'] + "/splits/test.csv"
     valid_filepath = config['output_dir'] + "/splits/valid.csv"
 
-    if not os.path.exists(train_filepath) or not os.path.exists(test_filepath) or not os.path.exists(valid_filepath):
+    # Create a dataframe
+    df = df(config)
 
-        # Create a dataframe
-        df = df(config)
-
-        # Create train, test, and validation splits and save them to file
-        prepare_splits(df, config)
+    # Create train, test, and validation splits and save them to file
+    prepare_splits(df, config)
