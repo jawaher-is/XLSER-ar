@@ -15,15 +15,17 @@ The datasets used contains speech emotions in different languages.
 python3 prepare_data.py --config content/config/<config-file>.yaml
 ```
 
-After preparing the data splits, if set to null, update the splits' data paths in the configuration file.
-
 #### 2. Preprocess the data
 ```bash
 python3 preprocess_data.py --config content/config/<config-file>.yaml
 ```
 #### 3. Train
+```bash
+python3 train.py --config content/config/<config-file>.yaml
 ```
-```
+
+> Or run the training (Step 3) directly, which executes the above steps.
+
 #### 4. Evaluate
 ```
 ```

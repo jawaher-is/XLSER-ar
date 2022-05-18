@@ -11,6 +11,3 @@ output_dir: ./content/models/test220517
 test: ./content/models/test220517/splits/test.csv
 train: ./content/models/test220517/splits/train.csv
 evaluate: ./content/models/test220517/splits/valid.csv
-
-train_dataset: ./content/models/test220517/features/train_dataset
-eval_dataset: ./content/models/test220517/features/eval_dataset

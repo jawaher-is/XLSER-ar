@@ -8,7 +8,7 @@ attention_mask: # null/ False or True
 
 output_dir: # model output directory. EXAMPLE ./content/models/new_model_name
 
-# Split files wil be output into <output_dir>/splits/<split>.csv
-test: # test split file path EXAMPLE ./content/models/new_model_name/splits/test.csv
-train: # train split file path (train.csv)
-evaluate: # vaildation split file path (valid.csv)
+# XX  # Split files wil be output into <output_dir>/splits/<split>.csv
+# test: # test split file path EXAMPLE ./content/models/new_model_name/splits/test.csv
+# train: # train split file path (train.csv)
+# evaluate: # vaildation split file path (valid.csv)
