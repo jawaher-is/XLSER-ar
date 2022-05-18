@@ -4,9 +4,6 @@ For training:
     #   Build the classification model based on the merge strategy,
     #   Use Huggingface's Trainer to set up the training pipline. For that, we need the follwing:
         -   Define a data collator. https://github.com/huggingface/transformers/blob/9a06b6b11bdfc42eea08fa91d0c737d1863c99e3/examples/research_projects/wav2vec2/run_asr.py#L81
-            +   Unlike most NLP models, XLSR-Wav2Vec2 has a much larger input length than output length. Given the large input sizes, it is much more efficient to pad the training batches dynamically meaning that all training samples should only be padded to the longest sample in their batch and not the overall longest sample. Therefore, fine-tuning XLSR-Wav2Vec2 requires a special padding data collator, which is defined below.
-            +   Without going into too many details, in contrast to the common data collators, this data collator treats the `input_values` and `labels` differently and thus applies to separate padding functions on them (again making use of XLSR-Wav2Vec2's context manager). This is necessary because in speech input and output are of different modalities meaning that they should not be treated by the same padding function.
-            +   Analogous to the common data collators, the padding tokens in the labels with `-100` so that those tokens are **not** taken into account when computing the loss.
         -   Evaluation metric.
         -   Load a pretrained checkpoint.
         -   Define the training parameters.
