@@ -6,8 +6,12 @@ This projects evaluates the performance of models pre-trained on different langu
 
 The datasets used contains speech emotions in different languages.
 
-### Requirements
+## Requirements
 - Pytorch (torch, torchaudio)
+
+...
+
+## Execution
 ...
 
 #### 1. Prepare the data splits
@@ -62,6 +66,7 @@ XLSER
 
 ```
 
+## Config
 For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
 
 > Explain config file naming
