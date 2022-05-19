@@ -56,6 +56,7 @@ if configuration['test_corpora'] is not None:
 # Load test data
 test_dataset = load_dataset("csv", data_files={"test": test_filepath}
 
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Device: {device}")
 
@@ -65,7 +66,7 @@ processor_name_or_path = configuration['processor_name_or_path']
 model_name_or_path = configuration['output_dir']
 
 config = AutoConfig.from_pretrained(model_name_or_path)
-processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path) ##
+processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path) 
 model = Wav2Vec2ForSpeechClassification.from_pretrained(model_name_or_path).to(device)
 
 
