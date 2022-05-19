@@ -3,8 +3,6 @@ import yaml
 import os
 
 import prepare_data
-import build_model
-
 from datasets import load_dataset
 
 import pandas as pd
