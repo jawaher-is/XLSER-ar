@@ -236,7 +236,7 @@ def prepare_splits(df, config, evaluation=False):
     if not evaluation:
         save_path = output_dir + "/splits/"
     else:
-        save_path = output_dir + "/evaluation-splits/"
+        save_path = output_dir + "/splits/evaluation-splits/"
 
     # Create splits directory
     if not os.path.isdir(save_path):

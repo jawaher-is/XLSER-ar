@@ -41,7 +41,7 @@ if configuration['test_corpora'] is not None:
     dataset is loaded, then the additional labels the model is not trained on
     are removed.
     """
-    test_filepath_ = configuration['output_dir'] + "/evaluation-splits/test.csv"
+    test_filepath_ = configuration['output_dir'] + "/splits/evaluation-splits/test.csv"
 
     if not os.path.exists(test_filepath_):
         # The original dataset is first loaded to be used for label comparasion
@@ -66,7 +66,7 @@ processor_name_or_path = configuration['processor_name_or_path']
 model_name_or_path = configuration['output_dir']
 
 config = AutoConfig.from_pretrained(model_name_or_path)
-processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path) 
+processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path)
 model = Wav2Vec2ForSpeechClassification.from_pretrained(model_name_or_path).to(device)
 
 
