@@ -46,12 +46,12 @@ def load_processor(configuration, label_list):
     return: config, processor, target_sampling_rate
     """
 
-    model_name_or_path = configuration['model_name_or_path']
+    processor_name_or_path = configuration['processor_name_or_path']
     pooling_mode = configuration['pooling_mode']
 
     # Load model configuration
     config = AutoConfig.from_pretrained(
-        model_name_or_path,
+        processor_name_or_path,
         num_labels=num_labels,
         label2id={label: i for i, label in enumerate(label_list)},
         id2label={i: label for i, label in enumerate(label_list)},
@@ -60,7 +60,7 @@ def load_processor(configuration, label_list):
     setattr(config, 'pooling_mode', pooling_mode)
 
     # Load processor
-    processor = Wav2Vec2Processor.from_pretrained(model_name_or_path,)
+    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path,)
     target_sampling_rate = processor.feature_extractor.sampling_rate
     print(f"The target sampling rate: {target_sampling_rate}")
 

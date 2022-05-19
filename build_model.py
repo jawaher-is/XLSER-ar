@@ -193,7 +193,7 @@ class DataCollatorCTCWithPadding:
         return batch
 
 
-def data_collator(processor, model_name_or_path):
+def data_collator(processor):
 
     data_collator = DataCollatorCTCWithPadding(processor=processor, padding=True)
 

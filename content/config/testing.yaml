@@ -1,10 +1,9 @@
 seed: 101
 
 corpora: ksuemotions
-data_path: /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/ksu_emotions
-  # /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions
+data_path: /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/ksu_emotions # /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions
 
-model_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
+processor_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
 attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
 

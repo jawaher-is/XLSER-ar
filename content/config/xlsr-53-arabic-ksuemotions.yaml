@@ -1,8 +1,9 @@
 seed: 101
+
 corpora: ksuemotions
 data_path: ./content/data/ksu_emotions/data/SPEECH/
 
-model_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
+processor_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
 attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
 

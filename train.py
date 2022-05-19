@@ -66,7 +66,7 @@ data_collator = build_model.data_collator(processor)
 compute_metrics = build_model.compute_metrics
 
 # Load the pretrained XLSR-Wav2Vec2 checkpoint into our classification model with a pooling strategy.
-model = build_model.load_pretrained_checkpoint(config, configuration['model_name_or_path'])
+model = build_model.load_pretrained_checkpoint(config, configuration['processor_name_or_path'])
 
 """
 The first component of XLSR-Wav2Vec2 consists of a stack of CNN layers that are used to extract acoustically meaningful - but contextually independent - features from the raw speech signal. This part of the model has already been sufficiently trained during pretraining and as stated in the [paper](https://arxiv.org/pdf/2006.13979.pdf) does not need to be fine-tuned anymore.

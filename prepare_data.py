@@ -188,10 +188,10 @@ def get_df(corpus, data_path, i=None):
         df = TESS(data_path)
     elif corpus == 'savee':
         df = SAVEE(data_path)
-    else:
-        print("Corpus name error")
-        exit()
-    return df
+    try:
+        return df
+    except:
+        raise ValueError("Invalid corpus name")
 
 
 def df(corpora, data_path):
@@ -257,7 +257,6 @@ def prepare_splits(df, config, evaluation=False):
     valid_df.to_csv(f"{save_path}/valid.csv", sep="\t", encoding="utf-8", index=False)
 
     print(f'train: {train_df.shape},\t validate: {valid_df.shape},\t test: {test_df.shape}')
-
 
 
 # Match eval_df to df by removing additional labels in eval_df
