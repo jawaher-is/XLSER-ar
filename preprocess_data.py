@@ -1,4 +1,4 @@
-"""
+configuration"""
 Preprocess training and validation dataset splits and save the features in ./content/<modelname>/features/
 """
 
@@ -6,7 +6,7 @@ import os
 
 from transformers import AutoConfig, Wav2Vec2Processor
 
-def training_data(configurations):
+def training_data(configuration):
     """
     Prepare data splits for Training
     return: train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
@@ -40,14 +40,14 @@ def training_data(configurations):
     return train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
 
 
-def load_processor(configurations, label_list):
+def load_processor(configuration, label_list):
     """
     Load the processor of the underlying pretrained wav2vec model
     return: config, processor, target_sampling_rate
     """
 
-    model_name_or_path = configurations['model_name_or_path']
-    pooling_mode = configurations['pooling_mode']
+    model_name_or_path = configuration['model_name_or_path']
+    pooling_mode = configuration['pooling_mode']
 
     # Load model configuration
     config = AutoConfig.from_pretrained(
@@ -67,7 +67,7 @@ def load_processor(configurations, label_list):
     return config, processor, target_sampling_rate
 
 
-def preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list):
+def preprocess_data(configuration, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list):
     """
     Preprocess the datasets:
     Resample the audio files, extract features using the processor, and save them to file.
@@ -105,7 +105,7 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
 
         return result
 
-    features_path = configurations['output_dir'] + '/features'
+    features_path = configuration['output_dir'] + '/features'
 
     if os.path.exists(features_path + "/train_dataset") and os.path.exists(features_path + "/eval_dataset"):
 
@@ -141,8 +141,8 @@ def preprocess_data(configurations, processor, target_sampling_rate, train_datas
     print('train_dataset: ', train_dataset)
     idx = 0
     print(f"Training input_values: {train_dataset[idx]['input_values']}")
-    print(configurations['attention_mask'])
-    if configurations['attention_mask'] is not None:
+    print(configuration['attention_mask'])
+    if configuration['attention_mask'] is not None:
         print(f"Training attention_mask: {train_dataset[idx]['attention_mask']}")
     print(f"Training labels: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
 
@@ -161,25 +161,25 @@ if __name__ == '__main__':
     config_file = args.config
 
     with open(config_file) as f:
-        configurations = yaml.load(f, Loader=yaml.FullLoader)
+        configuration = yaml.load(f, Loader=yaml.FullLoader)
 
 
     # prepare_data
-    train_filepath = configurations['output_dir'] + "/splits/train.csv"
-    test_filepath = configurations['output_dir'] + "/splits/test.csv"
-    valid_filepath = configurations['output_dir'] + "/splits/valid.csv"
+    train_filepath = configuration['output_dir'] + "/splits/train.csv"
+    test_filepath = configuration['output_dir'] + "/splits/test.csv"
+    valid_filepath = configuration['output_dir'] + "/splits/valid.csv"
 
     if not os.path.exists(train_filepath) or not os.path.exists(test_filepath) or not os.path.exists(valid_filepath):
         import prepare_data
         # prepare datasplits
-        df = df(configurations)
-        prepare_splits(df, configurations)
+        df = prepare_data.df(configuration['corpora'], configuration['data_path'])
+        prepare_data.prepare_splits(df, configuration)
 
 
     # Preprocess data
 
-    train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = training_data(configurations)
+    train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = training_data(configuration)
 
-    config, processor, target_sampling_rate = load_processor(configurations, label_list)
+    config, processor, target_sampling_rate = load_processor(configuration, label_list)
 
-    train_dataset, eval_dataset = preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)
+    train_dataset, eval_dataset = preprocess_data(configuration, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)

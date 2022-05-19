@@ -36,27 +36,27 @@ args = parser.parse_args()
 config_file = args.config
 
 with open(config_file) as f:
-    configurations = yaml.load(f, Loader=yaml.FullLoader)
+    configuration = yaml.load(f, Loader=yaml.FullLoader)
 
 
 # Prepare data
-train_filepath = configurations['output_dir'] + "/splits/train.csv"
-test_filepath = configurations['output_dir'] + "/splits/test.csv"
-valid_filepath = configurations['output_dir'] + "/splits/valid.csv"
+train_filepath = configuration['output_dir'] + "/splits/train.csv"
+test_filepath = configuration['output_dir'] + "/splits/test.csv"
+valid_filepath = configuration['output_dir'] + "/splits/valid.csv"
 
 if not os.path.exists(train_filepath) or not os.path.exists(test_filepath) or not os.path.exists(valid_filepath):
     import prepare_data
     # prepare datasplits
-    df = df(configurations)
-    prepare_splits(df, configurations)
+    df = prepare_data.df(configuration['corpora'], configuration['data_path'])
+    prepare_data.prepare_splits(df, configuration)
 
 
 # Prepare data splits for Training
-train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = preprocess_data.training_data(configurations)
+train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = preprocess_data.training_data(configuration)
 # Load the processor of the underlying pretrained wav2vec model
-config, processor, target_sampling_rate = preprocess_data.load_processor(configurations, lablel_list)
+config, processor, target_sampling_rate = preprocess_data.load_processor(configuration, lablel_list)
 # Get the preprocessed data splits
-train_dataset, eval_dataset = preprocess_data.preprocess_data(configurations, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)
+train_dataset, eval_dataset = preprocess_data.preprocess_data(configuration, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)
 
 
 # Define the data collator
@@ -66,7 +66,7 @@ data_collator = build_model.data_collator(processor)
 compute_metrics = build_model.compute_metrics
 
 # Load the pretrained XLSR-Wav2Vec2 checkpoint into our classification model with a pooling strategy.
-model = build_model.load_pretrained_checkpoint(config, configurations['model_name_or_path'])
+model = build_model.load_pretrained_checkpoint(config, configuration['model_name_or_path'])
 
 """
 The first component of XLSR-Wav2Vec2 consists of a stack of CNN layers that are used to extract acoustically meaningful - but contextually independent - features from the raw speech signal. This part of the model has already been sufficiently trained during pretraining and as stated in the [paper](https://arxiv.org/pdf/2006.13979.pdf) does not need to be fine-tuned anymore.
@@ -82,7 +82,7 @@ For more explanations on other parameters, one can take a look at the [docs](htt
 """
 
 training_args = TrainingArguments(
-    output_dir=configurations['output_dir'],
+    output_dir=configuration['output_dir'],
     per_device_train_batch_size=4,
     per_device_eval_batch_size=4,
     gradient_accumulation_steps=2,
@@ -104,7 +104,6 @@ if is_apex_available():
 if version.parse(torch.__version__) >= version.parse("1.6"):
     _is_native_amp_available = True
     from torch.cuda.amp import autocast
-
 
 class CTCTrainer(Trainer):
     def training_step(self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]]) -> torch.Tensor:
@@ -151,8 +150,7 @@ class CTCTrainer(Trainer):
         return loss.detach()
 
 
-"""Now, all instances can be passed to Trainer and we are ready to start training!"""
-
+# Pass all instances to Trainer
 trainer = CTCTrainer(
     model=model,
     data_collator=data_collator,
@@ -163,6 +161,8 @@ trainer = CTCTrainer(
     tokenizer=processor.feature_extractor,
 )
 
-
-""" Training """
+# Train
 trainer.train()
+
+
+# Insert code (from evaluate.py) to evaluate after training and use <model-path>/splits/test.csv

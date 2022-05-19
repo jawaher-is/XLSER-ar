@@ -7,6 +7,3 @@ pooling_mode: mean
 attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
 
 output_dir: ./content/models/wav2vec2-xlsr-arabic-ksuemotions
-test: null
-train: null
-evaluate: null

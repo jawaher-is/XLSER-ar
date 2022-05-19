@@ -9,15 +9,15 @@ import torch
 import torch.nn as nn
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
+import transformers
+from transformers import Wav2Vec2Processor, EvalPrediction
 from transformers.models.wav2vec2.modeling_wav2vec2 import (
     Wav2Vec2PreTrainedModel,
     Wav2Vec2Model
 )
-import transformers
-from transformers import Wav2Vec2Processor
 
 import numpy as np
-from transformers import EvalPrediction
+
 
 
 """ Build the classification model based on the merge strategy"""
@@ -224,6 +224,3 @@ def load_pretrained_checkpoint(config, model_name_or_path):
         config=config,
     )
     return  model
-
-
-#

@@ -180,7 +180,7 @@ def get_df(corpus, data_path, i=None):
     # Use the correct function to iterate through the named dataset.
     if corpus == 'ksuemotions':
         df = KSUEmotions(data_path)
-    elif corpus == 'ravess':
+    elif corpus == 'ravdess':
         df = RAVDESS(data_path)
     elif corpus == 'crema':
         df = CREMA(data_path)
@@ -188,28 +188,29 @@ def get_df(corpus, data_path, i=None):
         df = TESS(data_path)
     elif corpus == 'savee':
         df = SAVEE(data_path)
+    else:
+        print("Corpus name error")
+        exit()
     return df
 
 
-def df(config):
+def df(corpora, data_path):
     '''
-    This function uses the configurations file to get the datasets names and their file paths
+    This function uses the configuration file to get the datasets names and their file paths
     It creates a dataframe containing every filename, path, and emotion.
     '''
 
     # In case more than one dataset is used.
-    if type(config['corpora']) == list:
+    if type(corpora) == list:
         df = pd.DataFrame()
-        for i, corpus in enumerate(config['corpora']):
-            data_path = config['data_path'][i]
+        for i, corpus in enumerate(corpora):
+            data_path = data_path[i]
             df_ = get_df(corpus, data_path)
 
             df = pd.concat([df, df_], axis = 0)
 
     else:
-        corpus = config['corpora']
-        data_path = config['data_path']
-        df = get_df(corpus, data_path)
+        df = get_df(corpora, data_path)
 
     print(f"Step 0: {len(df)}")
 
@@ -230,9 +231,12 @@ def df(config):
     return df
 
 
-def prepare_splits(df, config):
+def prepare_splits(df, config, evaluation=False):
     output_dir = config['output_dir']
-    save_path = output_dir + "/splits/"
+    if not evaluation:
+        save_path = output_dir + "/splits/"
+    else:
+        save_path = output_dir + "/evaluation-splits/"
 
     # Create splits directory
     if not os.path.isdir(save_path):
@@ -252,9 +256,33 @@ def prepare_splits(df, config):
     test_df.to_csv(f"{save_path}/test.csv", sep="\t", encoding="utf-8", index=False)
     valid_df.to_csv(f"{save_path}/valid.csv", sep="\t", encoding="utf-8", index=False)
 
-    print(train_df.shape)
-    print(test_df.shape)
-    print(valid_df.shape)
+    print(f'train: {train_df.shape},\t validate: {valid_df.shape},\t test: {test_df.shape}')
+
+
+
+# Match eval_df to df by removing additional labels in eval_df
+def remove_additional_labels(df, eval_df):
+    df_labels = df["emotion"].unique()
+    eval_df_labels = eval_df["emotion"].unique()
+
+    print("Default dataset labels: ", df_labels)
+    print("Evaluation dataset labels: ", eval_df_labels)
+
+    additional_labels = []
+    for label in eval_df_labels:
+        if label not in df_labels:
+            additional_labels.append(label)
+
+    print("Length of evaluation dataset: \t", len(eval_df))
+
+    # Remove labels not in the orginal df
+    eval_df = eval_df[eval_df.emotion.isin(additional_labels) == False]
+
+    print(f"Length of evaluation dataset after removing {additional_labels}: \t", len(eval_df))
+    eval_df_labels = eval_df["emotion"].unique()
+    print("Evaluation dataset labels: ", eval_df_labels)
+
+    return eval_df
 
 
 if __name__ == '__main__':
@@ -275,7 +303,19 @@ if __name__ == '__main__':
     valid_filepath = config['output_dir'] + "/splits/valid.csv"
 
     # Create a dataframe
-    df = df(config)
+    df = df(config['corpora'], config['data_path'])
 
     # Create train, test, and validation splits and save them to file
     prepare_splits(df, config)
+
+
+    # If a different dataset is used to test the model:
+    if config['test_corpora'] is not None:
+        # Create a dataframe
+        eval_df = df(config['test_corpora'], config['test_corpora_path'])
+
+        # Match eval_df to df
+        eval_df = remove_additional_labels(df, eval_df)
+
+        # Create train, test, and validation splits and save them to file
+        prepare_splits(eval_df, config, evaluation=True)

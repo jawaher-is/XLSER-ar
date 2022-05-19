@@ -1,6 +1,8 @@
 seed: 101
+
 corpora: ksuemotions
-data_path: /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions
+data_path: /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/ksu_emotions
+  # /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions
 
 model_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
@@ -8,6 +10,6 @@ attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
 
 output_dir: ./content/models/test220517
 
-test: ./content/models/test220517/splits/test.csv
-train: ./content/models/test220517/splits/train.csv
-evaluate: ./content/models/test220517/splits/valid.csv
+# Optional: if planning to test the model on a different dataset
+test_corpora: ravdess
+test_corpora_path: /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/kaggle/input/ravdess-emotional-speech-audio

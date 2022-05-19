@@ -61,3 +61,5 @@ XLSER
 └── train.py
 
 ```
+
+Explain config file naming 
