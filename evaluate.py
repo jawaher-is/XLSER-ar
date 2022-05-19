@@ -60,6 +60,3 @@ test_dataset = load_dataset("csv", data_files={"test": test_filepath}
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Device: {device}")
-
-
-# Make a model trained on one dataset be evaluated on another: use the emotions present in the original dataset

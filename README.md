@@ -31,7 +31,6 @@ python3 train.py --config content/config/<config-file>.yaml
 ```
 ...
 
-For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
 
 
 ## File Structure
@@ -54,6 +53,7 @@ XLSER
 │       │       └── valid.csv
 │       │
 │       └── model 2
+├── evaluate.py
 ├── nested_array_catcher.py
 ├── prepare_data.py
 ├── preprocess_data.py
@@ -62,4 +62,6 @@ XLSER
 
 ```
 
-Explain config file naming 
+For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
+
+> Explain config file naming
