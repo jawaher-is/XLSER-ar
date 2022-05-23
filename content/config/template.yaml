@@ -1,11 +1,11 @@
 seed: # seed to recreate results
 
-corpora: # dataset name or a list from the following datasets ['ksuemotions', 'ravess', 'crema', 'tess', 'savee']
+corpora: # dataset name or a list from the following datasets ['ksuemotions', 'ravdess', 'crema', 'tess', 'savee'] jlcorpus, iemocap, aesdd
 data_path: # dataset path
 
 processor_name_or_path: # underlying pretrained model name or path
 pooling_mode: # pooling method: 'mean', 'sum', or 'max'
-return_attention_mask: # False or True 
+return_attention_mask: # False or True
 
 output_dir: # model output directory. EXAMPLE './content/models/new_model_name'
 

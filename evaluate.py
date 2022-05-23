@@ -133,3 +133,5 @@ if __name__ == '__main__':
     print("Sample predicted values: \t", y_pred[:5])
 
     print(classification_report(y_true, y_pred, target_names=label_names))
+
+    ## TODO: save results to file

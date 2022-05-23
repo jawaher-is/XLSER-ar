@@ -67,7 +67,7 @@ XLSER
 
 ```
 
-## Config
-For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
+## Configuration
+Configuration files are named as follows:  `pretrained-model-name-datasets-names`
 
-> Explain config file naming
+For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
