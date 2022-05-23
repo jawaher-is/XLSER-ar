@@ -40,10 +40,13 @@ python3 train.py --config content/config/<config-file>.yaml
 > Or run the training (Step 3) directly, which executes the above steps.
 
 #### 4. Evaluate
+The model is evaluated after training in `train.py`. Further, to test the trained model on different data, change `test_corpora` and `test_corpora_path` values in the configuration file.
+
 ```bash
 python3 evaluate.py --config content/config/<config-file>.yaml
 ```
 #### 5. Predict
+Demonstrate the model
 ```
 ```
 
