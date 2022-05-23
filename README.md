@@ -16,7 +16,7 @@ The datasets used contains speech emotions in different languages.
 
 
 ## Configuration
-Configuration files are named as follows:  `pretrained-model-name-datasets-names`
+Configuration files are named as follows:  `pretrained-model-name-datasets-names.yaml`
 
 For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
 
