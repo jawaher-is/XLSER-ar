@@ -5,7 +5,7 @@ data_path: /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recog
 
 processor_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
-attention_mask: null  # None for elgeish/wav2vec2-large-xlsr-53-arabic
+return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
 
 output_dir: ./content/models/test220517
 

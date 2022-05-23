@@ -31,7 +31,8 @@ python3 train.py --config content/config/<config-file>.yaml
 > Or run the training (Step 3) directly, which executes the above steps.
 
 #### 4. Evaluate
-```
+```bash
+python3 evaluate.py --config content/config/<config-file>.yaml
 ```
 ...
 

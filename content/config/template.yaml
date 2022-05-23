@@ -1,13 +1,13 @@
 seed: # seed to recreate results
 
-corpora: # dataset name or a list from the following datasets [ksuemotions, ravess, crema, tess, savee]
+corpora: # dataset name or a list from the following datasets ['ksuemotions', 'ravess', 'crema', 'tess', 'savee']
 data_path: # dataset path
 
 processor_name_or_path: # underlying pretrained model name or path
-pooling_mode: mean
-attention_mask: # null/ False or True
+pooling_mode: # pooling method: 'mean', 'sum', or 'max'
+return_attention_mask: # False or True 
 
-output_dir: # model output directory. EXAMPLE ./content/models/new_model_name
+output_dir: # model output directory. EXAMPLE './content/models/new_model_name'
 
 # Optional: if planning to test the model on a different dataset
 test_corpora: null

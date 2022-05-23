@@ -141,8 +141,8 @@ def preprocess_data(configuration, processor, target_sampling_rate, train_datase
     print('train_dataset: ', train_dataset)
     idx = 0
     print(f"Training input_values: {train_dataset[idx]['input_values']}")
-    print(configuration['attention_mask'])
-    if configuration['attention_mask'] is not None:
+    print('return_attention_mask:\t', configuration['return_attention_mask'])
+    if configuration['return_attention_mask'] is not False:
         print(f"Training attention_mask: {train_dataset[idx]['attention_mask']}")
     print(f"Training labels: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
 

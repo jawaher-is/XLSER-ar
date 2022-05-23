@@ -14,6 +14,7 @@ import yaml
 
 import preprocess_data
 import build_model
+import evaluate
 
 from transformers import (
     Trainer,
@@ -165,4 +166,37 @@ trainer = CTCTrainer(
 trainer.train()
 
 
-# Insert code (from evaluate.py) to evaluate after training and use <model-path>/splits/test.csv
+
+# Evaluate
+
+# Load test data
+test_dataset = load_dataset("csv", data_files={"test": test_filepath}, delimiter="\t")["test"]
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Device: {device}")
+
+# Load model configuration, processor, and pretrained checkpoint
+config, processor, model = evaluate.load_model(configuration, device)
+
+# Resample the audio files
+test_dataset = test_dataset.map(evaluate.speech_file_to_array_fn,
+    fn_kwargs=dict(processor=processor)
+    )
+
+# get predictions
+result = test_dataset.map(evaluate.predict,
+    batched=True,
+    batch_size=8,
+    fn_kwargs=dict(configuration=configuration, processor=processor, model=model, device=device)
+    )
+
+label_names = [config.id2label[i] for i in range(config.num_labels)]
+label_names
+
+y_true = [config.label2id[name] for name in result["emotion"]]
+y_pred = result["predicted"]
+
+print("Sample true values: \t", y_true[:5])
+print("Sample predicted values: \t", y_pred[:5])
+
+print(classification_report(y_true, y_pred, target_names=label_names))
