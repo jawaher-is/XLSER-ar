@@ -12,6 +12,7 @@ The datasets used contains speech emotions in different languages.
 - Pandas
 - Librosa
 - tqdm
+- Scikit-learn
 
 
 ## Configuration
