@@ -95,6 +95,23 @@ def predict(batch, configuration, processor, model, device):
     return batch
 
 
+def report(configuration, y_true, y_pred, label_names):
+    ## TODO: save results to file
+    clsf_report = classification_report(y_true, y_pred, target_names=label_names, output_dict=True)
+    clsf_report_df = pandas.DataFrame(class_report).transpose()
+
+    print(clsf_report_df)
+
+    if configuration['test_corpora'] is not None:
+        file_name = configuration['output_dir'].split('/')[-1] + '--' + configuration['test_corpora'] + '-clsf_report.csv'
+    else:
+        file_name = configuration['output_dir'].split('/')[-1] + '-clsf_report.csv'
+
+    clsf_report.to_csv(configuration['output_dir'] + file_name) # index
+
+    return clsf_report_df
+
+
 
 if __name__ == '__main__':
     # Get the configuration file
@@ -132,6 +149,6 @@ if __name__ == '__main__':
     print("Sample true values: \t", y_true[:5])
     print("Sample predicted values: \t", y_pred[:5])
 
-    print(classification_report(y_true, y_pred, target_names=label_names))
-
-    ## TODO: save results to file
+    # print(classification_report(y_true, y_pred, target_names=label_names))
+    clsf_report_df = report(y_true, y_pred, label_names)
+    print(clsf_report_df)

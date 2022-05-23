@@ -8,8 +8,17 @@ The datasets used contains speech emotions in different languages.
 
 ## Requirements
 - Pytorch (torch, torchaudio)
+- Huggingface (transformers, datasets)
+- Pandas
+- Librosa
+- tqdm
 
-...
+
+## Configuration
+Configuration files are named as follows:  `pretrained-model-name-datasets-names`
+
+For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
+
 
 ## Execution
 ...
@@ -34,8 +43,9 @@ python3 train.py --config content/config/<config-file>.yaml
 ```bash
 python3 evaluate.py --config content/config/<config-file>.yaml
 ```
-...
-
+#### 5. Predict
+```
+```
 
 
 ## File Structure
@@ -66,8 +76,3 @@ XLSER
 └── train.py
 
 ```
-
-## Configuration
-Configuration files are named as follows:  `pretrained-model-name-datasets-names`
-
-For the structure of the config file, see [template.yaml](https://github.com/jawaher-is/XLSER/blob/main/content/config/template.yaml)
