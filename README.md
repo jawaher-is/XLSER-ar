@@ -80,3 +80,6 @@ XLSER
 └── train.py
 
 ```
+
+## References
+1. [Emotion Recognition in Greek Speech Using Wav2Vec 2.0](https://colab.research.google.com/github/m3hrdadfi/soxan/blob/main/notebooks/Emotion_recognition_in_Greek_speech_using_Wav2Vec2.ipynb)
