@@ -2,6 +2,7 @@ content/data/
 content/models/
 .DS_Store
 .remote-sync.json
+Notes.pages
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
