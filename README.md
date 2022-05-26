@@ -52,7 +52,8 @@ Demonstrate the model
 ```
 
 ## Datasets
-> currently compatible with: KSUemotions, RAVDESS, CREMAD, TESS, SAVEE
+> currently compatible with: KSUemotions, RAVDESS, CREMAD, TESS, SAVEE. 
+> 
 > to be added: AESDD, IEMOCAP, JLCorpus
 
 ## File Structure
