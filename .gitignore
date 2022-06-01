@@ -3,6 +3,8 @@ content/models/
 .DS_Store
 .remote-sync.json
 Notes.pages
+*.sh
+XLSER/bashscripts/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

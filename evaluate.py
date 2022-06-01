@@ -51,10 +51,10 @@ def get_test_data(configuration):
     return test_dataset
 
 
-def load_model(configuration):
+def load_model(configuration, device):
     # Load model configuration, processor, and pretrained checkpoint
     processor_name_or_path = configuration['processor_name_or_path']
-    model_name_or_path = configuration['output_dir']
+    model_name_or_path = configuration['output_dir'] + configuration['checkpoint']
 
     config = AutoConfig.from_pretrained(model_name_or_path, cache_dir=configuration['cache_dir'])
     processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path, cache_dir=configuration['cache_dir'])

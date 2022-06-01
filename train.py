@@ -22,6 +22,7 @@ from transformers import (
     is_apex_available,
     TrainingArguments,
 )
+from datasets import load_dataset
 
 from typing import Any, Dict, Union
 
@@ -76,6 +77,7 @@ Thus, we can set the `requires_grad` to `False` for all parameters of the *featu
 """
 if configuration['freeze_feature_extractor']:
     model.freeze_feature_extractor()
+    print("freeze feature extractor")
 
 
 """
