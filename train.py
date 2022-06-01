@@ -11,6 +11,7 @@ For training:
 
 import argparse
 import yaml
+import os
 
 import preprocess_data
 import build_model
@@ -55,7 +56,7 @@ if not os.path.exists(train_filepath) or not os.path.exists(test_filepath) or no
 # Prepare data splits for Training
 train_dataset, eval_dataset, input_column, output_column, label_list, num_labels = preprocess_data.training_data(configuration)
 # Load the processor of the underlying pretrained wav2vec model
-config, processor, target_sampling_rate = preprocess_data.load_processor(configuration, lablel_list)
+config, processor, target_sampling_rate = preprocess_data.load_processor(configuration, label_list, num_labels)
 # Get the preprocessed data splits
 train_dataset, eval_dataset = preprocess_data.preprocess_data(configuration, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list)
 
@@ -89,11 +90,11 @@ training_args = TrainingArguments(
     per_device_eval_batch_size=4,
     gradient_accumulation_steps=2,
     evaluation_strategy="steps",
-    num_train_epochs=1.0
+    num_train_epochs=1.0,
     fp16=True,
-    save_steps=10
-    eval_steps=10
-    logging_steps=10
+    save_steps=10,
+    eval_steps=10,
+    logging_steps=10,
     learning_rate=1e-4,
     save_total_limit=2,
 )

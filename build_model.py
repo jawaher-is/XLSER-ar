@@ -217,11 +217,11 @@ def compute_metrics(p: EvalPrediction, is_regression=False):
         return {"accuracy": (preds == p.label_ids).astype(np.float32).mean().item()}
 
 
-def load_pretrained_checkpoint(config, model_name_or_path):
+def load_pretrained_checkpoint(configuration, model_name_or_path):
 
     model = Wav2Vec2ForSpeechClassification.from_pretrained(
         model_name_or_path,
-        config=config,
-        cache_dir=configuration['cache_dir']
+        config=configuration,
+        # cache_dir=configuration['cache_dir']
     )
     return  model

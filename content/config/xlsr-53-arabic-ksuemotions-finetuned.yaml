@@ -6,7 +6,7 @@ data_path: ./content/data/ksu_emotions/data/SPEECH/
 processor_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
 return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
-freeze_feature_extractor: True
+freeze_feature_extractor: False
 
 output_dir: ./content/models/wav2vec2-xlsr-arabic-ksuemotions
 cache_dir: ./content/cache

@@ -57,7 +57,7 @@ def load_model(configuration):
     model_name_or_path = configuration['output_dir']
 
     config = AutoConfig.from_pretrained(model_name_or_path, cache_dir=configuration['cache_dir'])
-    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path), cache_dir=configuration['cache_dir']
+    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path, cache_dir=configuration['cache_dir'])
     model = build_model.Wav2Vec2ForSpeechClassification.from_pretrained(model_name_or_path, cache_dir=configuration['cache_dir']).to(device)
 
     return config, processor, model

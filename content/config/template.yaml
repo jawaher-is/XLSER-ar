@@ -6,8 +6,11 @@ data_path: # dataset path
 processor_name_or_path: # underlying pretrained model name or path
 pooling_mode: # pooling method: 'mean', 'sum', or 'max'
 return_attention_mask: # False or True
+freeze_feature_extractor: 
+
 
 output_dir: # model output directory. EXAMPLE './content/models/new_model_name'
+cache_dir:
 
 # Optional: if planning to test the model on a different dataset
 test_corpora: null

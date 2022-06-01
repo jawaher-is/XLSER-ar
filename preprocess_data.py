@@ -1,4 +1,4 @@
-configuration"""
+"""
 Preprocess training and validation dataset splits and save the features in ./content/<modelname>/features/
 """
 
@@ -14,6 +14,9 @@ def training_data(configuration):
 
     # Load the created dataset splits using datasets
     from datasets import load_dataset
+
+    train_filepath = configuration['output_dir'] + "/splits/train.csv"
+    valid_filepath = configuration['output_dir'] + "/splits/valid.csv"
 
     data_files = {
         "train": train_filepath,
@@ -40,7 +43,7 @@ def training_data(configuration):
     return train_dataset, eval_dataset, input_column, output_column, label_list, num_labels
 
 
-def load_processor(configuration, label_list):
+def load_processor(configuration, label_list, num_labels):
     """
     Load the processor of the underlying pretrained wav2vec model
     return: config, processor, target_sampling_rate

@@ -1,14 +1,14 @@
 seed: 101
 
 corpora: ksuemotions
-data_path: ./content/data/ksu_emotions # /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions # /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/ksu_emotions
+data_path: ./content/data/ksu_emotions/data/SPEECH/ # /scratch/jia2025/w2v2_xlsr_arabic_ser/content/data/ksu_emotions # /Users/jia2025/Documents/GitHub Clones/audio_processing/Emotion_recognition_Wav2Vec2/content/data/ksu_emotions
 
 processor_name_or_path: elgeish/wav2vec2-large-xlsr-53-arabic
 pooling_mode: mean
 return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
 freeze_feature_extractor: True
 
-output_dir: ./content/models/xlsr-53-arabic-ksuemotions-no-freeze
+output_dir: ./content/models/wav2vec2-xlsr-arabic-ksuemotions-no-freeze
 cache_dir: ./content/cache
 
 # Optional: if planning to test the model on a different dataset
