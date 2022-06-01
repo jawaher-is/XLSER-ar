@@ -46,7 +46,7 @@ def get_test_data(configuration):
         test_filepath = test_filepath_
 
     # Load test data
-    test_dataset = load_dataset("csv", data_files={"test": test_filepath}, delimiter="\t")["test"]
+    test_dataset = load_dataset("csv", data_files={"test": test_filepath}, delimiter="\t", cache_dir=configuration['cache_dir'])["test"]
 
     return test_dataset
 
@@ -56,9 +56,9 @@ def load_model(configuration):
     processor_name_or_path = configuration['processor_name_or_path']
     model_name_or_path = configuration['output_dir']
 
-    config = AutoConfig.from_pretrained(model_name_or_path)
-    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path)
-    model = build_model.Wav2Vec2ForSpeechClassification.from_pretrained(model_name_or_path).to(device)
+    config = AutoConfig.from_pretrained(model_name_or_path, cache_dir=configuration['cache_dir'])
+    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path), cache_dir=configuration['cache_dir']
+    model = build_model.Wav2Vec2ForSpeechClassification.from_pretrained(model_name_or_path, cache_dir=configuration['cache_dir']).to(device)
 
     return config, processor, model
 

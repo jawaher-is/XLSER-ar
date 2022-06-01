@@ -20,7 +20,7 @@ def training_data(configuration):
         "validation": valid_filepath,
     }
 
-    dataset = load_dataset("csv", data_files=data_files, delimiter="\t", )
+    dataset = load_dataset("csv", data_files=data_files, delimiter="\t", cache_dir=configuration['cache_dir'])
     train_dataset = dataset["train"]
     eval_dataset = dataset["validation"]
 
@@ -56,11 +56,12 @@ def load_processor(configuration, label_list):
         label2id={label: i for i, label in enumerate(label_list)},
         id2label={i: label for i, label in enumerate(label_list)},
         finetuning_task="wav2vec2_clf",
+        cache_dir=configuration['cache_dir']
         )
     setattr(config, 'pooling_mode', pooling_mode)
 
     # Load processor
-    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path,)
+    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path, cache_dir=configuration['cache_dir'])
     target_sampling_rate = processor.feature_extractor.sampling_rate
     print(f"The target sampling rate: {target_sampling_rate}")
 

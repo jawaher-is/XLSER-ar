@@ -73,7 +73,8 @@ model = build_model.load_pretrained_checkpoint(config, configuration['processor_
 The first component of XLSR-Wav2Vec2 consists of a stack of CNN layers that are used to extract acoustically meaningful - but contextually independent - features from the raw speech signal. This part of the model has already been sufficiently trained during pretraining and as stated in the [paper](https://arxiv.org/pdf/2006.13979.pdf) does not need to be fine-tuned anymore.
 Thus, we can set the `requires_grad` to `False` for all parameters of the *feature extraction* part.
 """
-model.freeze_feature_extractor()
+if configuration['freeze_feature_extractor']:
+    model.freeze_feature_extractor()
 
 
 """
@@ -170,7 +171,10 @@ trainer.train()
 # Evaluate
 
 # Load test data
-test_dataset = load_dataset("csv", data_files={"test": test_filepath}, delimiter="\t")["test"]
+test_dataset = load_dataset("csv",
+    data_files={"test": test_filepath},
+    delimiter="\t",
+    cache_dir=configuration['cache_dir'])["test"]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Device: {device}")
