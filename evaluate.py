@@ -98,7 +98,7 @@ def predict(batch, configuration, processor, model, device):
 def report(configuration, y_true, y_pred, label_names):
     ## TODO: save results to file
     clsf_report = classification_report(y_true, y_pred, target_names=label_names, output_dict=True)
-    print(clsf_report)
+    # print(clsf_report)
     clsf_report_df = pd.DataFrame(clsf_report).transpose()
 
     print(clsf_report_df)
@@ -108,7 +108,7 @@ def report(configuration, y_true, y_pred, label_names):
     else:
         file_name = configuration['output_dir'].split('/')[-1] + '-clsf_report.csv'
 
-    clsf_report_df.to_csv(configuration['output_dir'] + file_name) # index
+    clsf_report_df.to_csv(configuration['output_dir'] + '/' + file_name, sep ='\t') # index
 
     return clsf_report_df
 
@@ -150,6 +150,6 @@ if __name__ == '__main__':
     print("Sample true values: \t", y_true[:5])
     print("Sample predicted values: \t", y_pred[:5])
 
-    # print(classification_report(y_true, y_pred, target_names=label_names))
+    print(classification_report(y_true, y_pred, target_names=label_names))
     clsf_report_df = report(configuration, y_true, y_pred, label_names)
-    print(clsf_report_df)
+    # print(clsf_report_df)

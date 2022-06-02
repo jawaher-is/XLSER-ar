@@ -15,7 +15,7 @@ import os
 
 import preprocess_data
 import build_model
-import evaluate 
+import evaluate
 
 from transformers import (
     Trainer,
@@ -206,6 +206,10 @@ y_pred = result["predicted"]
 print("Sample true values: \t", y_true[:5])
 print("Sample predicted values: \t", y_pred[:5])
 
+from sklearn import classification_report # why is it not imported from evaluate.py ...
+
 print(classification_report(y_true, y_pred, target_names=label_names))
+
+clsf_report_df = evaluate.report(configuration, y_true, y_pred, label_names)
 
 # TODO: save evaluation results to file
