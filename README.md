@@ -52,8 +52,8 @@ Demonstrate the model
 ```
 
 ## Datasets
-> currently compatible with: KSUemotions, RAVDESS, CREMAD, TESS, SAVEE. 
-> 
+> currently compatible with: KSUemotions, RAVDESS, CREMAD, TESS, SAVEE.
+>
 > to be added: AESDD, IEMOCAP, JLCorpus
 
 ## File Structure
@@ -61,6 +61,7 @@ Demonstrate the model
 XLSER
 ├── build_model.py
 ├── content
+│   ├── cache
 │   ├── config
 │   │   ├── testing.yaml
 │   │   └── ...
