@@ -23,7 +23,10 @@ def training_data(configuration):
         "validation": valid_filepath,
     }
 
-    dataset = load_dataset("csv", data_files=data_files, delimiter="\t", cache_dir=configuration['cache_dir'])
+    dataset = load_dataset("csv", data_files=data_files,
+                delimiter="\t",
+                cache_dir=configuration['cache_dir']
+                )
     train_dataset = dataset["train"]
     eval_dataset = dataset["validation"]
 
@@ -64,14 +67,24 @@ def load_processor(configuration, label_list, num_labels):
     setattr(config, 'pooling_mode', pooling_mode)
 
     # Load processor
-    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path, cache_dir=configuration['cache_dir'])
+    processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path,
+                                    cache_dir=configuration['cache_dir']
+                                    )
     target_sampling_rate = processor.feature_extractor.sampling_rate
     print(f"The target sampling rate: {target_sampling_rate}")
 
     return config, processor, target_sampling_rate
 
 
-def preprocess_data(configuration, processor, target_sampling_rate, train_dataset, eval_dataset, input_column, output_column, label_list):
+def preprocess_data(configuration,
+        processor,
+        target_sampling_rate,
+        train_dataset,
+        eval_dataset,
+        input_column,
+        output_column,
+        label_list
+        ):
     """
     Preprocess the datasets:
     Resample the audio files, extract features using the processor, and save them to file.
@@ -85,7 +98,9 @@ def preprocess_data(configuration, processor, target_sampling_rate, train_datase
 
     def speech_file_to_array_fn(path):
         speech_array, sampling_rate = torchaudio.load(path)
-        resampler = torchaudio.transforms.Resample(sampling_rate, target_sampling_rate)
+        resampler = torchaudio.transforms.Resample(sampling_rate,
+                                            target_sampling_rate
+                                            )
         speech = resampler(speech_array).squeeze().numpy()
         return speech
 
@@ -144,11 +159,11 @@ def preprocess_data(configuration, processor, target_sampling_rate, train_datase
 
     print('train_dataset: ', train_dataset)
     idx = 0
-    print(f"Training input_values: {train_dataset[idx]['input_values']}")
-    print('return_attention_mask:\t', configuration['return_attention_mask'])
-    if configuration['return_attention_mask'] is not False:
-        print(f"Training attention_mask: {train_dataset[idx]['attention_mask']}")
-    print(f"Training labels: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
+    # print(f"Training input_values: {train_dataset[idx]['input_values']}")
+    # print('return_attention_mask:\t', configuration['return_attention_mask'])
+    # if configuration['return_attention_mask'] is not False:
+    #     print(f"Training attention_mask: {train_dataset[idx]['attention_mask']}")
+    # print(f"Training label: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
 
     return train_dataset, eval_dataset
 
@@ -160,7 +175,7 @@ if __name__ == '__main__':
 
     # Get the configuration file
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', help='yaml configuration file path') # EXAMPLE content/config/test.yaml
+    parser.add_argument('--config', help='yaml configuration file path')
     args = parser.parse_args()
     config_file = args.config
 

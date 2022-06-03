@@ -7,12 +7,14 @@ data_path: [ "./content/data/kaggle/input/ravdess-emotional-speech-audio/audio_s
   "./content/data/kaggle/input/surrey-audiovisual-expressed-emotion-savee/ALL/"
   ]
 
-processor_name_or_path: jonatasgrosman/wav2vec2-large-xlsr-53-english
+processor_name_or_path: jonatasgrosman/wav2vec2-large-xlsr-53-english-frozen
 pooling_mode: mean
 return_attention_mask: True
 
 output_dir: ./content/models/wav2vec2-xlsr-english-ravdess-crema-tess-savee
 cache_dir: ./content/cache
+checkpoint: /checkpoint-320
+
 
 # Optional: if planning to test the model on a different dataset
 test_corpora: null

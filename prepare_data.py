@@ -204,11 +204,8 @@ def df(corpora, data_path):
     if type(corpora) == list:
         df = pd.DataFrame()
         for i, corpus in enumerate(corpora):
-            data_path = data_path[i]
-            df_ = get_df(corpus, data_path)
-
+            df_ = get_df(corpus, data_path[i])
             df = pd.concat([df, df_], axis = 0)
-
     else:
         df = get_df(corpora, data_path)
 
