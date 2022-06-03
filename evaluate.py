@@ -72,7 +72,7 @@ def load_model(configuration, device):
                     ache_dir=configuration['cache_dir']
                     )
     model = build_model.Wav2Vec2ForSpeechClassification.from_pretrained(
-                smodel_name_or_path,
+                model_name_or_path,
                 cache_dir=configuration['cache_dir']
                 ).to(device)
 
