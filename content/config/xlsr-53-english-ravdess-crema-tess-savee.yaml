@@ -7,11 +7,11 @@ data_path: [ "./content/data/kaggle/input/ravdess-emotional-speech-audio/audio_s
   "./content/data/kaggle/input/surrey-audiovisual-expressed-emotion-savee/ALL/"
   ]
 
-processor_name_or_path: jonatasgrosman/wav2vec2-large-xlsr-53-english-frozen
+processor_name_or_path: jonatasgrosman/wav2vec2-large-xlsr-53-english
 pooling_mode: mean
 return_attention_mask: True
 
-output_dir: ./content/models/wav2vec2-xlsr-english-ravdess-crema-tess-savee
+output_dir: ./content/models/wav2vec2-xlsr-english-ravdess-crema-tess-savee-frozen
 cache_dir: ./content/cache
 checkpoint: /checkpoint-320
 
