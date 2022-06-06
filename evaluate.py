@@ -155,6 +155,7 @@ if __name__ == '__main__':
 
     with open(config_file) as f:
         configuration = yaml.load(f, Loader=yaml.FullLoader)
+    print('Loaded configuration file: ', config_file)
 
     test_dataset = get_test_data(configuration)
 

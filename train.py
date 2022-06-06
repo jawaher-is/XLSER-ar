@@ -40,6 +40,7 @@ config_file = args.config
 
 with open(config_file) as f:
     configuration = yaml.load(f, Loader=yaml.FullLoader)
+print('Loaded configuration file: ', config_file)
 
 
 # Prepare data

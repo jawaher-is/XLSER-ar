@@ -118,9 +118,9 @@ def preprocess_data(configuration,
         result = processor(speech_list, sampling_rate=target_sampling_rate)
         result["labels"] = list(target_list)
 
-        # print('\nASSERTING dtype')
-        # for i in tqdm(range(len(result['input_values']))):
-        #     result['input_values'][i] = nested_array_catcher(result['input_values'][i])
+        print('\nASSERTING dtype')
+        for i in tqdm(range(len(result['input_values']))):
+            result['input_values'][i] = nested_array_catcher(result['input_values'][i])
 
         return result
 
