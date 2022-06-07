@@ -1,0 +1,17 @@
+seed: 101
+
+corpora: ksuemotions
+data_path: ./content/data/ksu_emotions/data/SPEECH/
+
+processor_name_or_path: nouamanetazi/wav2vec2-xls-r-300m-ar
+pooling_mode: mean
+return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
+freeze_feature_extractor: True
+
+output_dir: ./content/models/wav2vec2-xls-r-arabic-ksuemotions-frozen
+cache_dir: ./content/cache
+checkpoint: /checkpoint-320
+
+# Optional: if planning to test the model on a different dataset
+test_corpora: null
+test_corpora_path: null
