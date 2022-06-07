@@ -35,7 +35,7 @@ class CorpusDataFrame():
             })
         except Exception as e:
             print('Could not load ', str(path), e)
-            exceptions+=1
+            self.exceptions+=1
             pass
 
     def data_frame(self):
@@ -174,7 +174,34 @@ def SAVEE(data_path):
     df = cdf.data_frame()
     return df
 
-# TODO: add JLcorpus, IEMOCAP, and AESDD configuration
+
+def AESDD(data_path):
+    print('PREPARING AESDD DATA PATHS')
+
+    cdf = CorpusDataFrame()
+
+    for path in tqdm(Path(data_path).glob("**/*.wav")):
+        name = str(path).split('/')[-1].split('.')[0]
+        label = str(path).split('/')[-2]
+
+        if label == 'anger':
+            label = 'angry'
+        elif label == 'happiness':
+            label = 'happy'
+        elif label == 'sadness':
+            label = 'sad'
+        elif label == 'su':
+            label = 'surprise'
+        else:
+            label = label
+
+        cdf.append_file(path, name, label)
+
+    df = cdf.data_frame()
+    return df
+
+
+# TODO: add JLcorpus and  IEMOCAP configuration
 
 def get_df(corpus, data_path, i=None):
     # Use the correct function to iterate through the named dataset.
@@ -188,6 +215,8 @@ def get_df(corpus, data_path, i=None):
         df = TESS(data_path)
     elif corpus == 'savee':
         df = SAVEE(data_path)
+    elif corpus == 'aesdd':
+        df = AESDD(data_path)
     try:
         return df
     except:
