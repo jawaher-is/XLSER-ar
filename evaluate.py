@@ -28,7 +28,7 @@ def get_test_data(configuration):
             configuration['data_path'])
         prepare_data.prepare_splits(df, configuration)
 
-    if configuration['test_corpora'] is not None:
+    if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         """
         In case a different dataset is used to evaluate the model, this 'other'
         dataset is loaded, then the additional labels the model is not trained on
@@ -130,7 +130,7 @@ def report(configuration, y_true, y_pred, label_names):
 
     print(clsf_report_df)
 
-    if configuration['test_corpora'] is not None:
+    if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         file_name = (configuration['output_dir'].split('/')[-1]
                 + '--'
                 + configuration['test_corpora']

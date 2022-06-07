@@ -63,20 +63,22 @@ XLSER
 ├── content
 │   ├── cache
 │   ├── config
-│   │   ├── testing.yaml
+│   │   ├── template.yaml
 │   │   └── ...
 │   ├── data
 │   └── models
-│      └── model 1
-│       │   └───features
+│       ├── model_name
+│       │   ├── checkpoint-###
+│       │   ├── clsf_report.csv
+│       │   ├── features
 │       │   │   ├── train_dataset
 │       │   │   └── eval_dataset
-│       │   └── splits
-│       │       ├── test.csv
-│       │       ├── train.csv
-│       │       └── valid.csv
-│       │
-│       └── model 2
+│       │   ├── splits
+│       │   │   ├── test.csv
+│       │   │   ├── train.csv
+│       │   │   └── valid.csv
+│       │   └── ...
+│       └── ...
 ├── evaluate.py
 ├── nested_array_catcher.py
 ├── prepare_data.py
@@ -85,6 +87,9 @@ XLSER
 └── train.py
 
 ```
+
+## Results
+After evaluation, the classification report of each trained models is saved in the corresponding folder as a csv file. In this repo, they are collected in the `evaluation_results` folder.
 
 ## References
 1. [Emotion Recognition in Greek Speech Using Wav2Vec 2.0](https://colab.research.google.com/github/m3hrdadfi/soxan/blob/main/notebooks/Emotion_recognition_in_Greek_speech_using_Wav2Vec2.ipynb)

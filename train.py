@@ -207,7 +207,7 @@ y_pred = result["predicted"]
 print("Sample true values: \t", y_true[:5])
 print("Sample predicted values: \t", y_pred[:5])
 
-from sklearn import classification_report # why is it not imported from evaluate.py ...
+from sklearn.metrics import classification_report # why is it not imported from evaluate.py ...
 
 print(classification_report(y_true, y_pred, target_names=label_names))
 
