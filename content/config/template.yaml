@@ -8,8 +8,20 @@ pooling_mode: # pooling method: 'mean', 'sum', or 'max'
 return_attention_mask: False # True for models built with an attention_mask
 freeze_feature_extractor:  # True or False
 
-
+# Training Arguments
 output_dir: # model output directory. EXAMPLE './content/models/model_name'
+per_device_train_batch_size: 4
+per_device_eval_batch_size: 4
+gradient_accumulation_steps: 2
+evaluation_strategy: steps
+num_train_epochs: 1.0
+fp16: True
+save_steps: 10
+eval_steps: 10
+logging_steps: 10
+learning_rate: 1e-4
+save_total_limit: 2
+
 cache_dir: null # Optional: cach directory
 checkpoint: # path to model's checkpoint
 

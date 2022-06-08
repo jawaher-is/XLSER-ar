@@ -1,16 +1,16 @@
 seed: 101
 
-corpora: aesdd
-data_path: ./content/data/aesdd/
+corpora: ksuemotions
+data_path: ./content/data/ksu_emotions/data/SPEECH/
 
-processor_name_or_path: lighteternal/wav2vec2-large-xlsr-53-greek
+processor_name_or_path: AndrewMcDowell/wav2vec2-xls-r-300m-arabic
 pooling_mode: mean
-return_attention_mask: True
+return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
 freeze_feature_extractor: True
 
 # Training Arguments
-output_dir: ./content/models/wav2vec2-xlsr-greek-aesdd-frozen
-num_train_epochs: 5.0
+output_dir: ./content/models/wav2vec2-xls-r-arabic-ksuemotions-frozen-2
+num_train_epochs: 1.0
 per_device_train_batch_size: 4
 per_device_eval_batch_size: 4
 gradient_accumulation_steps: 2
@@ -23,8 +23,8 @@ learning_rate: 1e-4
 save_total_limit: 2
 
 cache_dir: ./content/cache
-checkpoint: /checkpoint-60
+checkpoint: /checkpoint-320
 
 # Optional: if planning to test the model on a different dataset
-test_corpora: null # ksuemotions
-test_corpora_path: null # ./content/data/ksu_emotions/data/SPEECH/
+test_corpora: null
+test_corpora_path: null
