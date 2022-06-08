@@ -1,10 +1,6 @@
-# XLSER
+# XLSER-ar
 
-Cross Lingual Speech Emotions Recognition using Wav2vec2
-
-This projects evaluates the performance of models pre-trained on different languages in recognizing emotions.
-
-The datasets used contains speech emotions in different languages.
+This projects evaluates the performance of Wav2vec2 models pre-trained on different languages in recognizing speech emotions recorded in Arabic.
 
 ## Requirements
 - Pytorch (torch, torchaudio)
@@ -52,6 +48,7 @@ Demonstrate the model
 ```
 
 ## Datasets
+The datasets used contains speech emotions in different languages.
 > currently compatible with: KSUemotions, RAVDESS, CREMAD, TESS, SAVEE.
 >
 > to be added: AESDD, IEMOCAP, JLCorpus
