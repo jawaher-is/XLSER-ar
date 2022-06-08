@@ -69,7 +69,7 @@ def load_model(configuration, device):
                 cache_dir=configuration['cache_dir']
                 )
     processor = Wav2Vec2Processor.from_pretrained(processor_name_or_path,
-                    ache_dir=configuration['cache_dir']
+                    cache_dir=configuration['cache_dir']
                     )
     model = build_model.Wav2Vec2ForSpeechClassification.from_pretrained(
                 model_name_or_path,
@@ -132,9 +132,9 @@ def report(configuration, y_true, y_pred, label_names):
 
     if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         file_name = (configuration['output_dir'].split('/')[-1]
-                + '--'
+                + '-evaluated-on-'
                 + configuration['test_corpora']
-                + '-clsf_report.csv')
+                + '_clsf_report.csv')
     else:
         file_name = 'clsf_report.csv'
 

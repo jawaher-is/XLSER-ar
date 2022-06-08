@@ -160,9 +160,9 @@ def preprocess_data(configuration,
     print('train_dataset: ', train_dataset)
     idx = 0
     # print(f"Training input_values: {train_dataset[idx]['input_values']}")
-    # print('return_attention_mask:\t', configuration['return_attention_mask'])
-    # if configuration['return_attention_mask'] is not False:
-    #     print(f"Training attention_mask: {train_dataset[idx]['attention_mask']}")
+    print('return_attention_mask:\t', configuration['return_attention_mask'])
+    if configuration['return_attention_mask'] is not False:
+        print(f"Training attention_mask: {train_dataset[idx]['attention_mask'][0]}")
     # print(f"Training label: {train_dataset[idx]['labels']} - {train_dataset[idx]['emotion']}")
 
     return train_dataset, eval_dataset

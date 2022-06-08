@@ -12,6 +12,7 @@ For training:
 import argparse
 import yaml
 import os
+import csv
 
 import preprocess_data
 import build_model
@@ -41,6 +42,7 @@ config_file = args.config
 with open(config_file) as f:
     configuration = yaml.load(f, Loader=yaml.FullLoader)
 print('Loaded configuration file: ', config_file)
+print(configuration)
 
 
 # Prepare data
@@ -89,17 +91,17 @@ For more explanations on other parameters, one can take a look at the [docs](htt
 
 training_args = TrainingArguments(
     output_dir=configuration['output_dir'],
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
-    gradient_accumulation_steps=2,
-    evaluation_strategy="steps",
-    num_train_epochs=1.0,
-    fp16=True,
-    save_steps=10,
-    eval_steps=10,
-    logging_steps=10,
-    learning_rate=1e-4,
-    save_total_limit=2,
+    per_device_train_batch_size=configuration['per_device_train_batch_size'],
+    per_device_eval_batch_size=configuration['per_device_eval_batch_size'],
+    gradient_accumulation_steps=configuration['gradient_accumulation_steps'],
+    evaluation_strategy=configuration['evaluation_strategy'],
+    num_train_epochs=configuration['num_train_epochs'],
+    fp16=configuration['fp16'],
+    save_steps=configuration['save_steps'],
+    eval_steps=configuration['eval_steps'],
+    logging_steps=configuration['logging_steps'],
+    learning_rate=float(configuration['learning_rate']),
+    save_total_limit=configuration['save_total_limit'],
 )
 
 
@@ -168,8 +170,9 @@ trainer = CTCTrainer(
 )
 
 # Train
-trainer.train()
+trainer.train(resume_from_checkpoint=configuration['resume_from_checkpoint'])
 
+# TODO Save used configuraton inside the model folder
 
 
 # Evaluate
