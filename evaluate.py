@@ -117,7 +117,7 @@ def predict(batch, configuration, processor, model, device):
     return batch
 
 
-def report(configuration, y_true, y_pred, labels, label_names):
+def report(configuration, y_true, y_pred, label_names, labels=None):
     clsf_report = classification_report(y_true,
                     y_pred,
                     labels=labels,
@@ -189,4 +189,4 @@ if __name__ == '__main__':
 
     print(classification_report(y_true, y_pred, labels=labels, target_names=label_names)) # , zero_division=0
     print(confusion_matrix(y_true, y_pred))
-    clsf_report_df = report(configuration, y_true, y_pred, labels, label_names)
+    clsf_report_df = report(configuration, y_true, y_pred, label_names, labels)
