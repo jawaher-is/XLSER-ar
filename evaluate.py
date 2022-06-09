@@ -11,7 +11,7 @@ import torch.nn as nn
 import torchaudio
 import numpy as np
 import librosa
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 from transformers import AutoConfig, Wav2Vec2Processor
 
 import build_model
@@ -37,16 +37,15 @@ def get_test_data(configuration):
         test_filepath_ = (configuration['output_dir']
             + "/splits/evaluation-splits/test.csv")
 
-        if not os.path.exists(test_filepath_):
-            # The original dataset is first loaded to be used for label comparasion
-            df = pd.read_csv(test_filepath, delimiter='\t')
+        # The original dataset is first loaded to be used for label comparasion
+        df = pd.read_csv(test_filepath, delimiter='\t')
 
-            eval_df = prepare_data.df(configuration['test_corpora'],
-                        configuration['test_corpora_path']
-                        )
-            eval_df = prepare_data.remove_additional_labels(df, eval_df)
+        eval_df = prepare_data.df(configuration['test_corpora'],
+                    configuration['test_corpora_path']
+                    )
+        eval_df = prepare_data.remove_additional_labels(df, eval_df)
 
-            prepare_data.prepare_splits(eval_df, configuration, evaluation=True)
+        prepare_data.prepare_splits(eval_df, configuration, evaluation=True)
 
         test_filepath = test_filepath_
 
@@ -118,14 +117,15 @@ def predict(batch, configuration, processor, model, device):
     return batch
 
 
-def report(configuration, y_true, y_pred, label_names):
-    ## TODO: save results to file
+def report(configuration, y_true, y_pred, labels, label_names):
     clsf_report = classification_report(y_true,
                     y_pred,
+                    labels=labels,
                     target_names=label_names,
+                    zero_division=0,
                     output_dict=True
                     )
-    # print(clsf_report)
+
     clsf_report_df = pd.DataFrame(clsf_report).transpose()
 
     print(clsf_report_df)
@@ -140,7 +140,7 @@ def report(configuration, y_true, y_pred, label_names):
 
     clsf_report_df.to_csv(configuration['output_dir']
                     + '/'
-                    + file_name, sep ='\t') # index
+                    + file_name, sep ='\t')
 
     return clsf_report_df
 
@@ -157,12 +157,12 @@ if __name__ == '__main__':
         configuration = yaml.load(f, Loader=yaml.FullLoader)
     print('Loaded configuration file: ', config_file)
 
-    test_dataset = get_test_data(configuration)
-
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
     config, processor, model = load_model(configuration, device)
+
+    test_dataset = get_test_data(configuration)
 
     test_dataset = test_dataset.map(speech_file_to_array_fn,
         fn_kwargs=dict(processor=processor)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
         )
 
     label_names = [config.id2label[i] for i in range(config.num_labels)]
-    label_names
+    labels = list(config.id2label.keys())
 
     y_true = [config.label2id[name] for name in result["emotion"]]
     y_pred = result["predicted"]
@@ -187,6 +187,6 @@ if __name__ == '__main__':
     print("Sample true values: \t", y_true[:5])
     print("Sample predicted values: \t", y_pred[:5])
 
-    print(classification_report(y_true, y_pred, target_names=label_names))
-    clsf_report_df = report(configuration, y_true, y_pred, label_names)
-    # print(clsf_report_df)
+    print(classification_report(y_true, y_pred, labels=labels, target_names=label_names)) # , zero_division=0
+    print(confusion_matrix(y_true, y_pred))
+    clsf_report_df = report(configuration, y_true, y_pred, labels, label_names)

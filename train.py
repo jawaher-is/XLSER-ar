@@ -12,7 +12,7 @@ For training:
 import argparse
 import yaml
 import os
-import csv
+import shutil
 
 import preprocess_data
 import build_model
@@ -55,6 +55,10 @@ if not os.path.exists(train_filepath) or not os.path.exists(test_filepath) or no
     # prepare datasplits
     df = prepare_data.df(configuration['corpora'], configuration['data_path'])
     prepare_data.prepare_splits(df, configuration)
+
+
+# Save used configuraton inside the model folder
+shutil.copy(config_file, configuration['output_dir'])
 
 
 # Prepare data splits for Training
@@ -172,7 +176,6 @@ trainer = CTCTrainer(
 # Train
 trainer.train(resume_from_checkpoint=configuration['resume_from_checkpoint'])
 
-# TODO Save used configuraton inside the model folder
 
 
 # Evaluate
@@ -215,5 +218,3 @@ from sklearn.metrics import classification_report # why is it not imported from 
 print(classification_report(y_true, y_pred, target_names=label_names))
 
 clsf_report_df = evaluate.report(configuration, y_true, y_pred, label_names)
-
-# TODO: save evaluation results to file
