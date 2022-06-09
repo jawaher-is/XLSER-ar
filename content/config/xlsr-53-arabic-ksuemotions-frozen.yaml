@@ -27,5 +27,5 @@ checkpoint: /checkpoint-320
 resume_from_checkpoint: False
 
 # Optional: if planning to test the model on a different dataset
-test_corpora: null
-test_corpora_path: null
+test_corpora:  aesdd
+test_corpora_path:  ./content/data/aesdd/
