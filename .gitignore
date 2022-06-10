@@ -5,6 +5,7 @@ content/models/
 Notes.pages
 *.sh
 XLSER/bashscripts/
+count_duration.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
