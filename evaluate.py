@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 import torchaudio
 import numpy as np
-from numpy import savetext
+from numpy import savetxt
 import librosa
 from sklearn.metrics import classification_report, confusion_matrix
 from transformers import AutoConfig, Wav2Vec2Processor
