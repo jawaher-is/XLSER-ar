@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torchaudio
 import numpy as np
+from numpy import savetext
 import librosa
 from sklearn.metrics import classification_report, confusion_matrix
 from transformers import AutoConfig, Wav2Vec2Processor
@@ -63,6 +64,7 @@ def load_model(configuration, device):
     # Load model configuration, processor, and pretrained checkpoint
     processor_name_or_path = configuration['processor_name_or_path']
     model_name_or_path = configuration['output_dir'] + configuration['checkpoint']
+    print('Loading checkoint: ', model_name_or_path)
 
     config = AutoConfig.from_pretrained(model_name_or_path,
                 cache_dir=configuration['cache_dir']
@@ -130,17 +132,29 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
 
     print(clsf_report_df)
 
+    confusion_matrix = confusion_matrix(y_true, y_pred)
+    print(confusion_matrix)
+
+    # Save classification report and confusion matrix to file
     if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         file_name = (configuration['output_dir'].split('/')[-1]
                 + '-evaluated-on-'
                 + configuration['test_corpora']
                 + '_clsf_report.csv')
+
+        cm_file_name = (configuration['output_dir'].split('/')[-1]
+                + '-evaluated-on-'
+                + configuration['test_corpora']
+                + '_conf_matrix.csv')
     else:
         file_name = 'clsf_report.csv'
+        cm_file_name = 'conf_matrix.csv'
 
     clsf_report_df.to_csv(configuration['output_dir']
                     + '/'
                     + file_name, sep ='\t')
+
+    savetext(cm_file_name, confusion_matrix, delimiter=',')
 
     return clsf_report_df
 
@@ -188,5 +202,5 @@ if __name__ == '__main__':
     print("Sample predicted values: \t", y_pred[:5])
 
     print(classification_report(y_true, y_pred, labels=labels, target_names=label_names)) # , zero_division=0
-    print(confusion_matrix(y_true, y_pred))
+    # print(confusion_matrix(y_true, y_pred))
     clsf_report_df = report(configuration, y_true, y_pred, label_names, labels)

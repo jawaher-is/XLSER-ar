@@ -106,6 +106,7 @@ training_args = TrainingArguments(
     logging_steps=configuration['logging_steps'],
     learning_rate=float(configuration['learning_rate']),
     save_total_limit=configuration['save_total_limit'],
+    # load_best_model_at_end=True
 )
 
 
@@ -216,6 +217,5 @@ print("Sample predicted values: \t", y_pred[:5])
 from sklearn.metrics import classification_report, confusion_matrix # why is it not imported from evaluate.py ...
 
 print(classification_report(y_true, y_pred, target_names=label_names))
-print(confusion_matrix(y_true, y_pred))
 
 clsf_report_df = evaluate.report(configuration, y_true, y_pred, label_names)
