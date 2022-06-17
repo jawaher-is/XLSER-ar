@@ -156,10 +156,10 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
 
     clsf_report_df.to_csv(configuration['output_dir']
                     + '/'
-                    + cm_file_name, sep ='\t')
+                    + file_name, sep ='\t')
 
     cm.to_csv(configuration['output_dir'] +  '/'
-    + file_name, sep ='\t')
+    + cm_file_name, sep ='\t')
 
 
 
