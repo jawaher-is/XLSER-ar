@@ -132,8 +132,12 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
 
     print(clsf_report_df)
 
-    confusion_matrix = confusion_matrix(y_true, y_pred)
-    print(confusion_matrix)
+    cm = confusion_matrix(y_true, y_pred,)
+    print(cm)
+
+    cm = pd.DataFrame(cm, index=label_names, columns=label_names)
+    print(cm)
+
 
     # Save classification report and confusion matrix to file
     if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
@@ -152,11 +156,10 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
 
     clsf_report_df.to_csv(configuration['output_dir']
                     + '/'
-                    + file_name, sep ='\t')
+                    + cm_file_name, sep ='\t')
 
-    savetext(cm_file_name, confusion_matrix, delimiter=',')
-
-    return clsf_report_df
+    cm.to_csv(configuration['output_dir'] +  '/'
+    + file_name, sep ='\t')
 
 
 
@@ -193,7 +196,9 @@ if __name__ == '__main__':
         )
 
     label_names = [config.id2label[i] for i in range(config.num_labels)]
+    print(label_names)
     labels = list(config.id2label.keys())
+    print(labels)
 
     y_true = [config.label2id[name] for name in result["emotion"]]
     y_pred = result["predicted"]
@@ -203,4 +208,4 @@ if __name__ == '__main__':
 
     print(classification_report(y_true, y_pred, labels=labels, target_names=label_names)) # , zero_division=0
     # print(confusion_matrix(y_true, y_pred))
-    clsf_report_df = report(configuration, y_true, y_pred, label_names, labels)
+    report(configuration, y_true, y_pred, label_names, labels)

@@ -206,7 +206,7 @@ result = test_dataset.map(evaluate.predict,
     )
 
 label_names = [config.id2label[i] for i in range(config.num_labels)]
-label_names
+print(label_names)
 
 y_true = [config.label2id[name] for name in result["emotion"]]
 y_pred = result["predicted"]
@@ -218,4 +218,4 @@ from sklearn.metrics import classification_report, confusion_matrix # why is it 
 
 print(classification_report(y_true, y_pred, target_names=label_names))
 
-clsf_report_df = evaluate.report(configuration, y_true, y_pred, label_names)
+evaluate.report(configuration, y_true, y_pred, label_names)
