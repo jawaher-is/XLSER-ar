@@ -23,7 +23,7 @@ learning_rate: 1e-4
 save_total_limit: 2
 
 cache_dir: ./content/cache
-checkpoint: /checkpoint-980
+checkpoint: /checkpoint-1640
 resume_from_checkpoint: True
 
 # Optional: if planning to test the model on a different dataset

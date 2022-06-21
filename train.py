@@ -22,6 +22,7 @@ from transformers import (
     Trainer,
     is_apex_available,
     TrainingArguments,
+    set_seed,
 )
 from datasets import load_dataset
 
@@ -44,6 +45,8 @@ with open(config_file) as f:
 print('Loaded configuration file: ', config_file)
 print(configuration)
 
+
+set_seed(configuration['seed'])
 
 # Prepare data
 train_filepath = configuration['output_dir'] + "/splits/train.csv"
@@ -106,6 +109,8 @@ training_args = TrainingArguments(
     logging_steps=configuration['logging_steps'],
     learning_rate=float(configuration['learning_rate']),
     save_total_limit=configuration['save_total_limit'],
+    seed=configuration['seed'],
+    data_seed=configuration['seed']
     # load_best_model_at_end=True
 )
 

@@ -1,5 +1,6 @@
 content/data/
 content/models/
+other/
 .DS_Store
 .remote-sync.json
 Notes.pages
