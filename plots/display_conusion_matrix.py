@@ -68,7 +68,8 @@ cr_values = cr_values.round(decimals=1)
 
 # plot
 fig, ax = plt.subplots()
-im = ax.imshow(cr_values)
+# im = ax.imshow(cr_values)
+plt.imshow(cr_values, interpolation = 'nearest' )
 
 ax.set_xticks(np.arange(len(metrics)))
 ax.set_yticks(np.arange(len(classes)))
@@ -79,8 +80,9 @@ for i in range(len(classes)):
     for j in range(len(metrics)):
         text = ax.text(j, i, cr_values[i, j], ha="center", va="center", color="w")
 
+
 plt.title('Classification Report')
-# plt.rcParams['figure.figsize'] = [12, 17]
+plt.rcParams['figure.figsize'] = [6, 4]
 # plt.figure(figsize=(3, 4))
 # plt.xlabel('Metrics')
 # plt.ylabel('Classes')
