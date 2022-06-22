@@ -138,7 +138,10 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
     cm = pd.DataFrame(cm, index=label_names, columns=label_names)
     print(cm)
 
-
+    results_path = configuration['output_dir'] + '/results'
+    if not os.path.isdir(results_path):
+        os.makedirs(results_path)
+        
     # Save classification report and confusion matrix to file
     if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         file_name = (configuration['output_dir'].split('/')[-1]
@@ -154,11 +157,11 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
         file_name = 'clsf_report.csv'
         cm_file_name = 'conf_matrix.csv'
 
-    clsf_report_df.to_csv(configuration['output_dir']
+    clsf_report_df.to_csv(results_path
                     + '/'
                     + file_name, sep ='\t')
 
-    cm.to_csv(configuration['output_dir'] +  '/'
+    cm.to_csv(results_path +  '/'
     + cm_file_name, sep ='\t')
 
 

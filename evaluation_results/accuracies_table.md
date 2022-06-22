@@ -5,7 +5,8 @@
 | Wav2Vec2-base                     | -                     | KSUEmotions | frozen      | No  | 3 | 91.5
 | Wav2Vec2-base                     | -                     | KSUEmotions | frozen      | No  | 5 | 95.4
 | Wav2Vec2-base                     | -                     | KSUEmotions | fine-tuned  | No  | 1 | 74.7
-| Wav2Vec2-base                     | -                     | KSUEmotions | fine-tuned  | No  | 3 |
+| Wav2Vec2-base                     | -                     | KSUEmotions | fine-tuned  | No  | 3 | 85.1
+| Wav2Vec2-base                     | -                     | KSUEmotions | fine-tuned  | No  | 5 | 91.2
 | Wav2Vec2-Large-XLSR-53-Arabic     | Common Voice Arabic   | KSUEmotions | frozen      | No  | 1 | 89.9
 | Wav2Vec2-Large-XLSR-53-Arabic     | Common Voice Arabic   | KSUEmotions | frozen      | No  | 3 | 94.8
 | Wav2Vec2-Large-XLSR-53-Arabic     | Common Voice Arabic   | KSUEmotions | fine-tuned  | No  | 1 | 88.1
