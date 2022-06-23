@@ -90,6 +90,12 @@ if configuration['freeze_feature_extractor']:
     print("freeze feature extractor")
 
 
+# Log data into wandb [Optional]
+if configuration.get('report_to', None):
+    import wandb
+    run_name = configuration['output_dir'].split('/')[-1]
+    wandb.init(project="XLSER-ar", name=run_name, dir=configuration['cache_dir'])
+
 """
 Define the training parameters
     - `learning_rate` and `weight_decay` were heuristically tuned until fine-tuning has become stable. Note that those parameters strongly depend on the Common Voice dataset and might be suboptimal for other speech datasets.
@@ -110,7 +116,8 @@ training_args = TrainingArguments(
     learning_rate=float(configuration['learning_rate']),
     save_total_limit=configuration['save_total_limit'],
     seed=configuration['seed'],
-    data_seed=configuration['seed']
+    data_seed=configuration['seed'],
+    report_to=configuration.get('report_to', None)
     # load_best_model_at_end=True
 )
 
