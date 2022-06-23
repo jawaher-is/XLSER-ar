@@ -9,7 +9,7 @@ return_attention_mask: False
 freeze_feature_extractor: False
 
 # Training Arguments
-output_dir: ./content/models/wav2vec2-arabic-ksuemotions-finetuned
+output_dir: ./content/models/wav2vec2-ksuemotions-finetuned
 num_train_epochs: 5.0
 per_device_train_batch_size: 4
 per_device_eval_batch_size: 4
