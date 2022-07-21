@@ -1,0 +1,7 @@
+	angry	happy	neutral	questioning	sad	surprise
+angry	32	1	0	0	0	0
+happy	1	57	5	0	0	3
+neutral	0	0	65	0	1	0
+questioning	0	0	0	32	0	0
+sad	0	1	8	0	56	0
+surprise	0	1	0	0	0	65
