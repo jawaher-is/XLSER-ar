@@ -3,6 +3,7 @@ import yaml
 import os
 import json
 import matplotlib.pyplot as plt
+import time
 
 '''
 /Users/jia2025/Desktop/XLSER-ar/content/config/wav2vec2-ksuemotions-frozen.yaml
@@ -20,7 +21,7 @@ def make_plot(dict_, step, xlabel, ylabel):
 
     f, ax = plt.subplots()
     chart_title = (step + ' ' + ylabel).capitalize()
-    plt.title(chart_title)
+    # plt.title(chart_title)
 
     for model_name in dict_:
         xData = dict_[model_name][step + '_' + xlabel]
@@ -33,7 +34,7 @@ def make_plot(dict_, step, xlabel, ylabel):
     plt.legend()
     ax.set_ylim(0)
 
-    plt.savefig('./plots/output/' + step + '_' + ylabel + '_' + xlabel + '_' + str(len(dict_)) + '.png', dpi=300)
+    plt.savefig('./plotting/output/' + step + '_' + ylabel + '_' + xlabel + '_' + str(len(dict_)) + '_' + ts + '.png', dpi=300)
     # plt.show()
     plt.close()
 
@@ -92,7 +93,7 @@ if __name__ == '__main__':
     config_files_list = []
 
     while True:
-        usr_input = input("Enter the configuration file paths separated by a new line (or press return to end): ").splitlines()
+        usr_input = input("\nEnter the configuration file paths separated by a new line (or press return to end): ").splitlines()
         if len(usr_input) < 1:
             break
         if isinstance(usr_input, list):
@@ -108,7 +109,7 @@ if __name__ == '__main__':
             configuration = yaml.load(f, Loader=yaml.FullLoader)
 
         model_name = configuration['output_dir'].split('/')[-1]
-        label = input('Enter a label for ' + model_name + ' : ')
+        label = input('\nEnter a label for ' + model_name + ': ')
 
         trainer_state_path = configuration['output_dir'] + configuration['checkpoint'] + '/trainer_state.json'
         with open(trainer_state_path, "r") as f:
@@ -120,7 +121,7 @@ if __name__ == '__main__':
 
         dict_[label] = data
 
-
+    ts = str(int(time.time()))
     # make_plot(dict_, "train", "step", "loss")
     make_plot(dict_, "train", "epoch", "loss")
 
