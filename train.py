@@ -91,9 +91,9 @@ if configuration['freeze_feature_extractor']:
 
 
 # Log data into wandb [Optional]
-if configuration.get('report_to', None):
+if configuration.get('report_to', None) == 'wandb':
     import wandb
-    run_name = configuration['output_dir'].split('/')[-1]
+    run_name = configuration['seed'] + '/' + configuration['output_dir'].split('/')[-1]
     wandb.init(project="XLSER-ar", name=run_name, dir=configuration['cache_dir'])
 
 """

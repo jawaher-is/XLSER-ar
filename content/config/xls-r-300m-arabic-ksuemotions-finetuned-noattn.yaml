@@ -9,7 +9,7 @@ return_attention_mask: False  # False for elgeish/wav2vec2-large-xlsr-53-arabic
 freeze_feature_extractor: False
 
 # Training Arguments
-output_dir: ./content/models/wav2vec2-xls-r-300m-arabic-ksuemotions-finetuned
+output_dir: ./content/models/wav2vec2-xls-r-300m-arabic-ksuemotions-finetuned-noattn
 num_train_epochs: 5.0
 per_device_train_batch_size: 4
 per_device_eval_batch_size: 4

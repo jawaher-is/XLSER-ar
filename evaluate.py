@@ -13,7 +13,7 @@ import numpy as np
 from numpy import savetxt
 import librosa
 from sklearn.metrics import classification_report, confusion_matrix
-from transformers import AutoConfig, Wav2Vec2Processor
+from transformers import AutoConfig, Wav2Vec2Processor, set_seed
 
 import build_model
 
@@ -141,7 +141,7 @@ def report(configuration, y_true, y_pred, label_names, labels=None):
     results_path = configuration['output_dir'] + '/results'
     if not os.path.isdir(results_path):
         os.makedirs(results_path)
-        
+
     # Save classification report and confusion matrix to file
     if ((configuration['test_corpora'] is not None) and (__name__ == '__main__')):
         file_name = (configuration['output_dir'].split('/')[-1]
@@ -180,6 +180,8 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
+    set_seed(configuration['seed'])
+
     config, processor, model = load_model(configuration, device)
 
     test_dataset = get_test_data(configuration)
@@ -199,9 +201,9 @@ if __name__ == '__main__':
         )
 
     label_names = [config.id2label[i] for i in range(config.num_labels)]
-    print(label_names)
+    # print(label_names)
     labels = list(config.id2label.keys())
-    print(labels)
+    # print(labels)
 
     y_true = [config.label2id[name] for name in result["emotion"]]
     y_pred = result["predicted"]

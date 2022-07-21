@@ -1,9 +1,0 @@
-	angry	calm	disgust	fear	happy	neutral	sad	surprise
-angry	17	0	0	0	0	1	0	1
-calm	0	17	0	0	0	2	0	0
-disgust	1	0	18	0	0	0	0	0
-fear	1	0	0	17	0	0	1	1
-happy	0	0	0	0	16	1	1	1
-neutral	0	2	0	0	0	8	0	0
-sad	0	2	1	0	0	1	15	0
-surprise	0	0	0	0	0	0	0	19

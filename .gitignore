@@ -1,5 +1,4 @@
 content/data/
-content/models/
 **/delete/
 .DS_Store
 .remote-sync.json
@@ -7,6 +6,11 @@ Notes.pages
 *.sh
 XLSER/bashscripts/
 count_duration.py
+**/features/
+pytorch_model.bin
+optimizer.pt
+**/202/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

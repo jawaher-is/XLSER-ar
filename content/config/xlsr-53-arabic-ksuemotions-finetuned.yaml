@@ -21,6 +21,7 @@ eval_steps: 10
 logging_steps: 10
 learning_rate: 1e-4
 save_total_limit: 2
+report_to: 'wandb'
 
 cache_dir: ./content/cache
 checkpoint: /checkpoint-1640

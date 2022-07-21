@@ -9,7 +9,7 @@ return_attention_mask: False
 freeze_feature_extractor: True
 
 # Training Arguments
-output_dir: ./content/models/wav2vec2-xlsr-53-english-ksuemotions-frozen-2
+output_dir: ./content/models/wav2vec2-xlsr-53-english-ksuemotions-frozen
 num_train_epochs: 3.0
 per_device_train_batch_size: 4
 per_device_eval_batch_size: 4
@@ -21,6 +21,7 @@ eval_steps: 10
 logging_steps: 10
 learning_rate: 1e-4
 save_total_limit: 2
+report_to: 'wandb'
 
 cache_dir: ./content/cache
 checkpoint: /checkpoint-980
