@@ -22,13 +22,10 @@ def make_plot(dict_, step, xlabel, ylabel):
     chart_title = (step + ' ' + ylabel).capitalize()
     plt.title(chart_title)
 
-    all_models = ''
     for model_name in dict_:
         xData = dict_[model_name][step + '_' + xlabel]
         yData = dict_[model_name][step + '_' + ylabel]
         plt.plot(xData, yData, label=model_name)
-
-        all_models = all_models + '_' + model_name
 
     plt.xlabel(xlabel.capitalize())
     plt.ylabel(ylabel.capitalize())
@@ -36,7 +33,7 @@ def make_plot(dict_, step, xlabel, ylabel):
     plt.legend()
     ax.set_ylim(0)
 
-    plt.savefig('./plots/output/' + step + '_' + ylabel + '_' + xlabel + str(len(all_models)) + '.png', dpi=300)
+    plt.savefig('./plots/output/' + step + '_' + ylabel + '_' + xlabel + '_' + str(len(dict_)) + '.png', dpi=300)
     # plt.show()
     plt.close()
 
