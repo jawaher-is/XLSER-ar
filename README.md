@@ -87,7 +87,7 @@ XLSER
 ```
 
 ## Results
-After evaluation, the classification report of each trained models is saved in the corresponding folder as a csv file. In this repo, they are collected in the `results` folder in each model.
+After evaluation, the classification report of each trained models is saved in the corresponding folder as a csv file. In this repo, they are collected in the `results` folder of each model.
 
 ## References
 1. [Emotion Recognition in Greek Speech Using Wav2Vec 2.0](https://colab.research.google.com/github/m3hrdadfi/soxan/blob/main/notebooks/Emotion_recognition_in_Greek_speech_using_Wav2Vec2.ipynb)
